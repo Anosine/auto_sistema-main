@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Auto sistema</title>
+
+    <!-- Montserrat Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+  </head>
+  <body class="login-body">
+
+        <main class="main-container">
+            <div class="login-container">
+                <form id="loginForm" class="login-form" action="process_login.php" method="POST">
+                  <h2>Prisijunti</h2>
+                  <div class="input-box">
+                    <input type="text" id="username" name="username" placeholder="El.paštas" required>
+                    <i class="bx bxs-user"></i>
+                </div>
+                  <div class="input-box">
+                    <input type="password" id="password" name="password" placeholder="Slaptažodis" required>
+                    <i class="bx bxs-lock-alt"></i>
+                </div>
+                  <div class="remember-forgot">
+                    <label>
+                        <input type="checkbox">Prisiminti
+                    </label>
+                    <a href="/forgotPassword.html">Pamiršai slaptažodį?</a>
+                  </div>
+                  <button type="submit" class="btn">Prisijungti</button>
+                </form>
+            </div>
+        </main>
+        <!-- End Main -->
+
+  <!-- Scripts -->
+  <!-- Custom JS -->
+  <script src="js/scripts.js"></script>
+</body>
+</html>
