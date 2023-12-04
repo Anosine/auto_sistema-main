@@ -3,6 +3,7 @@ $(function onDocReady() {
     });
 
 function callAPI(event)  {
+    var carsDBId = $('#carsDBId').val();
     var carsDBModel = $('#carsDBModel').val();
     var carsDBLicensePlate = $('#carsDBLicensePlate').val();
     var carsDBGearbox = $('#carsDBGearbox').val();
@@ -14,6 +15,7 @@ function callAPI(event)  {
 
     // Create a JSON object with the variables
     var requestData = {
+        CarId : carsDBId,
         carsDBModel: carsDBModel,
         carsDBLicensePlate: carsDBLicensePlate,
         carsDBGearbox: carsDBGearbox,
