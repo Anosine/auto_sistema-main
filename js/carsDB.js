@@ -1,14 +1,8 @@
 $(function onDocReady() {
-    $('#addCarForm').submit(function(event) {
-        // Prevent the default form submission
-        event.preventDefault();
-
-        // Call the callAPI function when the form is submitted
-        callAPI();
+    $('#addCarForm').submit(callAPI)
     });
-});
 
-var callAPI = () => {
+function callAPI(event)  {
     var carsDBModel = $('#carsDBModel').val();
     var carsDBLicensePlate = $('#carsDBLicensePlate').val();
     var carsDBGearbox = $('#carsDBGearbox').val();
