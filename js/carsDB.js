@@ -58,7 +58,7 @@ var getAllCars = () => {
 
     // Create a JSON object with parameters for API call and store in a variable
     var requestOptions = {
-        http_method: 'GET', // Use GET method for retrieving data
+        httpMethod: 'GET', // Use GET method for retrieving data
         headers: myHeaders,
         redirect: 'follow'
     };
