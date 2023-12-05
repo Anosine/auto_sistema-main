@@ -60,6 +60,7 @@ var getAllCars = () => {
     var requestOptions = {
         method: 'GET', // Use GET method for retrieving data
         headers: myHeaders,
+        body: JSON.stringify({ "httpMethod": "GET" }),
         redirect: 'follow'
     };
 
