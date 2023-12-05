@@ -33,7 +33,7 @@ function callAPI(event)  {
     // Instantiate a Headers object
     var myHeaders = new Headers();
     // Add content type header to object
-    myHeaders.append("GET","Content-Type", "application/json");
+    myHeaders.append("Content-Type", "application/json");
 
     // Create a JSON object with parameters for API call and store in a variable
     var requestOptions = {
@@ -54,7 +54,7 @@ var getAllCars = () => {
     // Instantiate a Headers object
     var myHeaders = new Headers();
     // Add content type header to object
-    myHeaders.append("Content-Type", "https://www.autovaldymas.link/");
+    myHeaders.append("Content-Type", "https://www.autovaldymas.link/", "GET");
 
     // Create a JSON object with parameters for API call and store in a variable
     var requestOptions = {
