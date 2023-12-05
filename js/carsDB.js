@@ -64,7 +64,7 @@ var getAllCars = () => {
     };
 
     // Make API call to get all cars and use promises to handle the response
-    fetch("https://x10uh2luad.execute-api.eu-west-1.amazonaws.com/alpha", requestOptions)
+    fetch("https://z5mqqjq6dg.execute-api.eu-west-1.amazonaws.com/test1", requestOptions)
         .then(response => response.json()) // Assuming the response is in JSON format
         .then(result => {
             // Process the result (array of cars)
