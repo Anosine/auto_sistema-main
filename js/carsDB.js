@@ -62,7 +62,7 @@ var getAllCars = () => {
         headers: myHeaders,
         redirect: 'follow'
     };
-
+    console.log(requestOptions)
     // Make API call to get all cars and use promises to handle the response
     fetch("https://z5mqqjq6dg.execute-api.eu-west-1.amazonaws.com/test1", requestOptions)
         .then(response => response.json()) // Assuming the response is in JSON format
@@ -71,12 +71,12 @@ var getAllCars = () => {
             console.log(result);
             
             // Update the container element with the dynamic table
-            updateTable(result);
+            //updateTable(result);
         })
         .catch(error => console.log('error', error));
 };
 
-var updateTable = (cars) => {
+/*var updateTable = (cars) => {
     // Assuming you have a container element with ID 'tableContainer'
     var tableContainer = $('#tableContainer');
 
@@ -103,3 +103,4 @@ var updateTable = (cars) => {
     // Update the content of the container element
     tableContainer.html(tableHTML);
 };
+*/
