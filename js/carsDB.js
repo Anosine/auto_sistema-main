@@ -1,7 +1,12 @@
 $(function onDocReady() {
     $('#addCarForm').submit(callAPI)
     $('#getAllCarsButton').click(getAllCars);
-    });
+    var allowedURLs = ["https://www.autovaldymas.link/getcars", "http://127.0.0.1:5500/getcars.html"];
+    if (allowedURLs.includes(window.location.href)) {
+        // If the URL matches, call the getAllCars function
+        getAllCars();
+    }    
+});
 
 function callAPI(event)  {
     var carsDBId = $('#carsDBId').val();
