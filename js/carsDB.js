@@ -54,7 +54,7 @@ var getAllCars = () => {
     // Instantiate a Headers object
     var myHeaders = new Headers();
     // Add content type header to object
-    myHeaders.append("Access-Control-Allow-Origin", "https://www.autovaldymas.link");
+    //myHeaders.append("Access-Control-Allow-Origin", "https://www.autovaldymas.link");
     //myHeaders.append("Content-Type", "origin: https://www.autovaldymas.link");
 
     // Create a JSON object with parameters for API call and store in a variable
