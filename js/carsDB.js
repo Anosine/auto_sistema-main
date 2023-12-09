@@ -54,8 +54,7 @@ var getAllCars = () => {
     // Instantiate a Headers object
     var myHeaders = new Headers();
     // Add content type header to object
-    //myHeaders.append("Access-Control-Allow-Origin", "https://www.autovaldymas.link");
-    //myHeaders.append("Content-Type", "origin: https://www.autovaldymas.link");
+    myHeaders.append("Content-Type", "application/json");
 
     // Create a JSON object with parameters for API call and store in a variable
     var requestOptions = {
@@ -72,12 +71,12 @@ var getAllCars = () => {
             console.log(result);
             
             // Update the container element with the dynamic table
-            //updateTable(result);
+            updateTable(result);
         })
         .catch(error => console.log('error', error));
 };
 
-/*var updateTable = (cars) => {
+var updateTable = (cars) => {
     // Assuming you have a container element with ID 'tableContainer'
     var tableContainer = $('#tableContainer');
 
@@ -104,4 +103,3 @@ var getAllCars = () => {
     // Update the content of the container element
     tableContainer.html(tableHTML);
 };
-*/
