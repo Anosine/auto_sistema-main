@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+
+   
+       <!-- Montserrat Font -->
+       <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+       <!-- Material Icons -->
+       <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+   
+       <!-- Custom CSS -->
+       <link rel="stylesheet" href="css/styles.css">
+    <!-- Your other head elements go here -->
+</head>
+<body>
+    <div class="grid-container">
+
+        <!-- Header -->
+        <header class="header">
+          <div class="menu-icon" onclick="openSidebar()">
+            <span class="material-icons-outlined">menu</span>
+          </div>
+          <div class="header-left">
+            <span class="material-icons-outlined"></span>
+          </div>
+          <div class="header-right">
+            <span class="material-icons-outlined">notifications</span>
+            <span class="material-icons-outlined" style="padding-right: 65px;">email</span>
+  
+            <div class="action">
+              <div class="profile" onclick="menuToggle();">
+                  <img src="images/user.jpg" alt="">
+              </div>
+      
+              <div class="menu">
+                  <ul>
+                      <li>
+                        <span class="material-icons-outlined">person</span>
+                        <a href="/Profile.html">Redaguoti profilį</a>
+                      </li>
+                      <li>
+                        <span class="material-icons-outlined">settings</span>
+                        <a href="/settings.html">Nustatymai</a>
+                      </li>
+                      <li>
+                        <span class="material-icons-outlined">login</span>
+                        <a href="/login.html">Prisijungti</a>
+                      </li>
+                      <li>
+                        <span class="material-icons-outlined">logout</span>
+                        <a href="#">Atsijungti</a>
+                      </li>
+                  </ul>
+              </div>
+            </div>
+          </div>
+        </header>
+        <!-- End Header -->
+  
+        <!-- Sidebar -->
+        <aside id="sidebar">
+          <div class="sidebar-title">
+            <div class="sidebar-brand">
+              <span class="material-icons-outlined">directions_car</span> Automobilių valdymo sistema
+            </div>
+            <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
+          </div>
+  
+          <ul class="sidebar-list">
+            <li class="sidebar-list-item">
+              <a href="/index.htmls" target="_self">
+                <span class="material-icons-outlined">dashboard</span> Dashboard
+              </a>
+            </li>
+            <li class="sidebar-list-item">
+              <a href="/carRental.html" target="_self">
+                <span class="material-icons-outlined">car_rental</span> Realaus laiko stebėsena
+              </a>
+            </li>
+            <li class="sidebar-list-item">
+              <a href="/cars.html" target="_self">
+                <span class="material-icons-outlined">directions_car</span> Automobiliai
+              </a>
+            </li>
+            <li class="sidebar-list-item">
+              <a href="#" target="_blank">
+                <span class="material-icons-outlined">poll</span> Apžvalga
+              </a>
+            </li>
+          </ul>
+        </aside>
+        <!-- End Sidebar -->
+    <h1>Jūsų profilis</h1>
+
+    <div id="profile-container">
+        <!-- User profile information will be displayed here -->
+    </div>
+
+    <!-- Your other body elements go here -->
+
+</body>
+
+
+ <!-- Include the AWS SDK -->
+  <script src="js/vendor/jquery-3.1.0.js"></script>
+  <script src="js/vendor/bootstrap.min.js"></script>
+  <script src="js/vendor/aws-cognito-sdk.min.js"></script>
+  <script src="js/vendor/amazon-cognito-identity.min.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/cognito-auth.js"></script>
+  <script src="js/scripts.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aws-sdk/2.1134.0/aws-sdk.min.js"></script>
+  <script src="js/carsDB.js"></script>
+  <script src="js/authentication.js"></script>
+</html>
