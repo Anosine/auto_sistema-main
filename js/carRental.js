@@ -4,16 +4,19 @@ $(function onDocReady() {
     //if (allowedURLs.includes(window.location.href)) {
         // If the URL matches, call the getAllCars function
     ReserveListRead();
+   
     //}    
 });
+
 if(getUserFromLocalStorage()){
-    //  console.log('testas');
-  }
+    //console.log(cognitoUser);
 
-
+  
+//Checkboxai ir jų tikrinimas
 var onlyFree = 0;
 var onlyReserved = 0;
 var onlyBusy = 0;
+var carId= 0;
 
 function updateCheckboxValues() {
     onlyFree = document.getElementById('onlyFreeCH').checked ? 1 : 0;
@@ -24,7 +27,8 @@ function updateCheckboxValues() {
 
 
     var ReserveListRead = () => {
-        // Instantiate a Headers object
+        if(cognitoUser){
+            // Instantiate a Headers object
         var myHeaders = new Headers();
         // Add content type header to object
         myHeaders.append("Content-Type", "application/json");
@@ -36,40 +40,18 @@ function updateCheckboxValues() {
             redirect: 'follow'
         };
     
-    
-        //REIK išritni
-        //REIK išritni
-        //REIK išritni
-        //REIK išritni
-        //REIK išritni
-        //REIK išritni
-        //REIK išritni
-        //REIK išritni
-    
-        //console.log(requestOptions)
         // Make API call to get all cars and use promises to handle the response
         fetch("https://z5mqqjq6dg.execute-api.eu-west-1.amazonaws.com/test1/CarsDB", requestOptions)
             .then(response => response.json()) // Assuming the response is in JSON format
             .then(result => {
-                // Process the result (array of cars)
-                 //REIK išritni
-        //REIK išritni
-        //REIK išritni
-        //REIK išritni
-        //REIK išritni
-        //REIK išritni
-        //REIK išritni
-        //REIK išritni
-        
-             //  console.log(result);
-                
                 // Update the container element with the dynamic table
-                updateTable(result);
+                updateTableRental(result);
             })
             .catch(error => console.log('error', error));
-    };
+    };}
 
-    var updateTable = (cars) => {
+
+    var updateTableRental = (cars) => {
         // Assuming you have a container element with ID 'tableContainer'
         var tableContainer = $('#tableContainer');
     
@@ -104,7 +86,7 @@ function updateCheckboxValues() {
             tableHTML += '<td>' + car.carsDBPower + '</td>';
             tableHTML += '<td>' + car.carsDBdrivebase + '</td>';
             tableHTML += '<td>' + car.carsDBUsability + '</td>';
-            tableHTML += '<td>' +'<button id="reservationButton" onclick="openReservationModal()">Rezervuoti automobilį</button></td>';
+            tableHTML += '<td>' +'<button id="reservationButton" /onclick="openReservationModal(this)">Rezervuoti</button></td>';
             tableHTML += '</tr>';
             }
         }
@@ -116,10 +98,7 @@ function updateCheckboxValues() {
         tableContainer.html(tableHTML);
     };
 
-//Open Reservation modal
-function openReservationModal() {
-    reservationModal.style.display = 'flex';
-}
+
 //Close Reservation modal
 function closeReservationModal() {
     document.getElementById('reservationModal').style.display = 'none';
@@ -129,19 +108,152 @@ function closeReservationModal() {
 
 // Attach event listeners to the checkboxes
 document.getElementById('onlyFreeCH').addEventListener('change', function () {
+   // ReserveListRead();
     updateCheckboxValues();
-    updateTable(cars); // Update the table based on checkbox changes
+    //updateTable(cars); // Update the table based on checkbox changes
 });
 
 document.getElementById('onlyBusyCH').addEventListener('change', function () {
+   // ReserveListRead();
     updateCheckboxValues();
-    updateTable(cars); // Update the table based on checkbox changes
+    //updateTable(cars); // Update the table based on checkbox changes
 });
 document.getElementById('onlyReservedCH').addEventListener('change', function () {
+   // ReserveListRead();
     updateCheckboxValues();
-    updateTable(cars); // Update the table based on checkbox changes
+    //updateTable(cars); // Update the table based on checkbox changes
 });
 
-// Initial setup
-updateCheckboxValues();
-updateTable(cars);
+
+console.log(globalName);
+
+}
+
+
+
+function openReservationModal(event) {
+    carId = $(event).closest('tr').find('td:nth-child(2)').text();
+    // Pass the carId to the modal for reference
+    console.log(carId);
+    updateGlobalUserData();
+    console.log(globalUsername);
+
+
+
+
+
+    var modal = document.getElementById('reservationModal');
+
+
+
+
+    reservationModal.style.display = 'flex';
+  
+    // You can further customize the modal content based on the selected carId
+  }
+
+
+
+
+function submitReservation() {
+    // Get values from the modal form
+    var startDate = document.getElementById('startDate').value;
+    var endDate = document.getElementById('endDate').value;
+    //var selectedCarId = document.getElementById('selectedCarId').value;
+    console.log (startDate, endDate)
+    // Validate the form data (add your own validation logic)
+  
+    // Construct the reservation object
+    var reservationData = {
+      TripsDB: "09",
+      startDate: startDate,
+      endDate: endDate,
+      carId: carId,
+      globalUsername: globalUsername
+    };
+    console.log(reservationData);
+    var myHeaders = new Headers();
+    // Add content type header to object
+    myHeaders.append("Content-Type", "application/json");
+ 
+    var requestOptions = {
+        method: 'POST', // Use POST method for sending data
+        headers: myHeaders,
+        body: JSON.stringify(reservationData),
+        redirect: 'follow'
+    };    
+    fetch("https://z5mqqjq6dg.execute-api.eu-west-1.amazonaws.com/test1/TripsDB", requestOptions)
+            .then(response => response.json())
+            .then(result => {
+                // Handle the result as needed
+                console.log('Result:', result);
+            })
+            .catch(error => console.error('Error:', error));
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // Make API call to save reservation to Reservation database
+    //saveReservation(reservationData);
+  
+    // Optionally, update the CarsDB to mark the car as reserved
+    //markCarAsReserved(selectedCarId);
+  
+    // Close the reservation modal
+    closeReservationModal();
+  
+    console.log(startDate, carId, endDate);
+}
+  
+
+
+
+function saveReservation(reservationData) {
+    // Make API call to your Reservation database
+    // Use fetch or any other preferred method to send data to the server
+    // ...
+  
+    // Example using fetch:
+    // fetch("your_reservation_api_endpoint", {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify(reservationData),
+    // })
+    // .then(response => response.json())
+    // .then(data => console.log('Reservation saved:', data))
+    // .catch(error => console.error('Error saving reservation:', error));
+  }
+
+function markCarAsReserved(carId) {
+  // Make API call to update CarsDB to mark the car as reserved
+  // This depends on your CarsDB structure and API endpoint
+}
+console.log(startDate, carId, endDate);
+/*document.getElementById('tableContainer').addEventListener('click', function (event) {
+    if (event.target.classList.contains('reservationButton')) {
+      // Extract carId from the closest <tr> element
+      var carId = event.target.closest('tr').querySelector('td:nth-child(2)').innerText;
+      openReservationModal(carId);
+      console.log(carId);
+    }
+  });
+
+*/

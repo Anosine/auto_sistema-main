@@ -22,6 +22,8 @@ function menuToggle(){
   toggleMenu.classList.toggle('active')
 }
 
+
+/* PERKELTAS Į carRental.js
 //rezervation modal
 // Function to open the reservation modal
 document.addEventListener('DOMContentLoaded', function() {
@@ -34,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
-// Function to close the reservation modal
+/ Function to close the reservation modal
 function closeReservationModal() {
   document.getElementById('reservationModal').style.display = 'none';
-}
+}*/

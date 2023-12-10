@@ -25,6 +25,7 @@
         <div class="header-left">
           <span class="material-icons-outlined"></span>
         </div>
+        <div id="topBanner">Esate prisijungę</div>
         <div class="header-right">
           <span class="material-icons-outlined">notifications</span>
           <span class="material-icons-outlined" style="padding-right: 65px;">email</span>
@@ -50,7 +51,7 @@
                 </li>
                 <li>
                   <span class="material-icons-outlined" id="logoutIcon" >logout</span>
-                  <a href="#" id="logoutLink">Atsijungti</a>
+                  <a href="#" id="logoutLink" onclick="logout()">Atsijungti</a>
                 </li>
                 </ul>
             </div>
@@ -135,7 +136,7 @@
         <label for="endDate">Pasirinkite rezervacijos pabaigos datą:</label><br>
         <input type="date" id="endDate" name="endDate" required>
         <br><br>
-        <input type="submit" value="Rezervuoti">
+        <input type="button" onclick = submitReservation() value="Rezervuoti">
     </form>
     </div>
 </div>
@@ -153,5 +154,6 @@
     <script src="js/authentication.js"></script>
     <script src="js/carsDB.js"></script>
     <script src="js/carRental.js"></script>
+    <script src="js/scripts.js"></script>
   </body>
 </html>

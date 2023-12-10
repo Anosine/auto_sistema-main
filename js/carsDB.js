@@ -1,6 +1,6 @@
 $(function onDocReady() {
     $('#addCarForm').submit(callAPI)
-    $('#getAllCarsButton').click(getAllCars);
+    //$('#getAllCarsButton').click(getAllCars);
     var allowedURLs = ["https://www.autovaldymas.link/getcars","https://www.autovaldymas.link/carRental", "http://127.0.0.1:5500/getcars.html"];
     if (allowedURLs.includes(window.location.href)) {
         // If the URL matches, call the getAllCars function
