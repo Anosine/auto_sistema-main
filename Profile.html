@@ -33,26 +33,26 @@
   
             <div class="action">
               <div class="profile" onclick="menuToggle();">
-                  <img src="images/user.jpg" alt="">
+                  <img id="profileImageElement" src="images/user.jpg" alt="">
               </div>
       
               <div class="menu">
                   <ul>
                       <li>
-                        <span class="material-icons-outlined">person</span>
-                        <a href="/Profile.html">Redaguoti profilį</a>
+                        <span class="material-icons-outlined" id="profileIcon" >person</span>
+                        <a href="/Profile.html" id="profileLink">Redaguoti profilį</a>
                       </li>
                       <li>
                         <span class="material-icons-outlined">settings</span>
-                        <a href="/settings.html">Nustatymai</a>
+                        <a href="/settings.html" >Nustatymai</a>
                       </li>
                       <li>
-                        <span class="material-icons-outlined">login</span>
-                        <a href="/login.html">Prisijungti</a>
+                        <span class="material-icons-outlined" id="loginIcon">login</span>
+                        <a href="/login.html" id="loginLink"> Prisijungti</a>
                       </li>
                       <li>
-                        <span class="material-icons-outlined">logout</span>
-                        <a href="#">Atsijungti</a>
+                        <span class="material-icons-outlined" id="logoutIcon" >logout</span>
+                        <a href="#" id="logoutLink">Atsijungti</a>
                       </li>
                   </ul>
               </div>
@@ -97,11 +97,38 @@
     <h1>Jūsų profilis</h1>
 
     <div id="profile-container">
-        <!-- User profile information will be displayed here -->
-    </div>
-
-    <!-- Your other body elements go here -->
-
+      <div id="nameContainer">
+          <strong>Vardas:</strong> <span id="name"></span>
+      </div>
+      <div id="lastNameContainer">
+          <strong>Pavardė:</strong> <span id="lastName"></span>
+      </div>
+      <div id="emailContainer">
+          <strong>Paštas:</strong> <span id="email"></span>
+      </div>
+      <div id="roleContainer">
+          <strong>Rolė:</strong> <span id="role"></span>
+      </div>
+      
+      <!-- Add an edit button to trigger the editProfile function -->
+      <button id="editProfileButton" onclick="editProfile()">Edit Profile </button>
+      <!-- Add a form for editing user information (initially hidden) -->
+      <form id="editForm" style="display: none;">
+          <label for="editName">Name:</label>
+          <input type="text" id="editNameInput">
+          <br>
+          <label for="editLastName">Last Name:</label>
+          <input type="text" id="editLastNameInput">
+          <br>
+          <label for="editEmail">Email:</label>
+          <input type="email" id="editEmailInput">
+          <br>
+          <label for="editRole">Role:</label>
+          <input type="text" id="editRoleInput">
+          <br>
+          <button type="button" onclick="saveChanges()">Save Changes</button>
+      </form>
+  </div>
 </body>
 
 
