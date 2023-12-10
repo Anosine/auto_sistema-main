@@ -31,27 +31,27 @@
 
           <div class="action">
             <div class="profile" onclick="menuToggle();">
-                <img src="images/user.jpg" alt="">
+              <img id="profileImageElement" src="images/user.jpg" alt="">
             </div>
     
             <div class="menu">
-                <ul>
-                    <li>
-                      <span class="material-icons-outlined">person</span>
-                      <a href="/Profile.html">Redaguoti profilį</a>
-                    </li>
-                    <li>
-                      <span class="material-icons-outlined">settings</span>
-                      <a href="/settings.html">Nustatymai</a>
-                    </li>
-                    <li>
-                      <span class="material-icons-outlined">login</span>
-                      <a href="/login.html">Prisijungti</a>
-                    </li>
-                    <li>
-                      <span class="material-icons-outlined">logout</span>
-                      <a href="#">Atsijungti</a>
-                    </li>
+              <ul>
+                <li>
+                  <span class="material-icons-outlined" id="profileIcon" >person</span>
+                  <a href="/Profile.html" id="profileLink">Redaguoti profilį</a>
+                </li>
+                <li>
+                  <span class="material-icons-outlined">settings</span>
+                  <a href="/settings.html" >Nustatymai</a>
+                </li>
+                <li>
+                  <span class="material-icons-outlined" id="loginIcon">login</span>
+                  <a href="/login.html" id="loginLink"> Prisijungti</a>
+                </li>
+                <li>
+                  <span class="material-icons-outlined" id="logoutIcon" >logout</span>
+                  <a href="#" id="logoutLink">Atsijungti</a>
+                </li>
                 </ul>
             </div>
           </div>
@@ -94,39 +94,34 @@
       <!-- End Sidebar -->
 
       <!-- Main -->
-      <main class="main-container">
-        <div class="table">
-            <div class="table_section">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Markė</th>
-                            <th>Numeris</th>
-                            <th>Užimtumas</th>
-                            <th>Rezervuoti</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td ><a href="/carsInfo.html">Audi</a></td>
-                            <td>AAA111</td>
-                            <td></td>
-                            <td><button id="reservationButton">Rezervuoti automobilį</button></td>
-                        </tr>
-                        <tr>
-                            <td><a href="/carsInfo.html">BMW 535</a></td>
-                            <td>BBB222</td>
-                            <td></td>
-                            <td><button id="reservationButton">Rezervuoti automobilį</button></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-      </main>
+      <main class="main-container" >
+        <!-- Checkboxes -->
+        <div id="checkboxContainer">
+          <label>
+             <input type="checkbox" id="onlyFreeCH"> Rodyti tik neužimtus
+          </label>
+          <label>
+             <input type="checkbox" id="onlyBusyCH"> Rodyti tik užimtus
+          </label>
+          <label>
+             <input type="checkbox" id="onlyReservedCH"> Rodyti tik rezervuotus
+          </label>
+       </div>
+        <div id="tableContainer" class="table" >
+
+  <!-- Dynamic table from carsDB.js-->
+    
+
+ 
+    
+          </div>
+
+
+          <button id="getAllCarsButton" onclick="ReserveListRead()">Refresh</button>
+      </main> 
       <!-- End Main -->
 
-    </div>
+  
 
     <!-- Reservation Modal -->
 <div id="reservationModal" class="modal">
@@ -148,6 +143,15 @@
 
     <!-- Scripts -->
     <!-- Custom JS -->
-    <script src="js/scripts.js"></script>
+    <script src="js/vendor/jquery-3.1.0.js"></script>
+    <script src="js/vendor/bootstrap.min.js"></script>
+    <script src="js/vendor/aws-cognito-sdk.min.js"></script>
+    <script src="js/vendor/amazon-cognito-identity.min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/cognito-auth.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aws-sdk/2.1134.0/aws-sdk.min.js"></script>
+    <script src="js/authentication.js"></script>
+    <script src="js/carsDB.js"></script>
+    <script src="js/carRental.js"></script>
   </body>
 </html>

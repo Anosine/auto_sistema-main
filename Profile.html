@@ -111,22 +111,22 @@
       </div>
       
       <!-- Add an edit button to trigger the editProfile function -->
-      <button id="editProfileButton" onclick="editProfile()">Edit Profile </button>
+      <button id="editProfileButton" onclick="editProfile()">Redaguoti profilį </button>
       <!-- Add a form for editing user information (initially hidden) -->
       <form id="editForm" style="display: none;">
-          <label for="editName">Name:</label>
+          <label for="editName">Vardas:</label>
           <input type="text" id="editNameInput">
           <br>
-          <label for="editLastName">Last Name:</label>
+          <label for="editLastName">Pavardė:</label>
           <input type="text" id="editLastNameInput">
           <br>
-          <label for="editEmail">Email:</label>
+          <label for="editEmail">El. paštas:</label>
           <input type="email" id="editEmailInput">
           <br>
-          <label for="editRole">Role:</label>
+          <label for="editRole">Rolė:</label>
           <input type="text" id="editRoleInput">
           <br>
-          <button type="button" onclick="saveChanges()">Save Changes</button>
+          <button type="button" onclick="saveChanges()">Išsaugokite pakeitimus</button>
       </form>
   </div>
 </body>
@@ -140,7 +140,6 @@
   <script src="js/config.js"></script>
   <script src="js/cognito-auth.js"></script>
   <script src="js/scripts.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/aws-sdk/2.1134.0/aws-sdk.min.js"></script>
-  <script src="js/carsDB.js"></script>
   <script src="js/authentication.js"></script>
+  <script src="js/profile.js"></script>
 </html>

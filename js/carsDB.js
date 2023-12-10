@@ -1,7 +1,7 @@
 $(function onDocReady() {
     $('#addCarForm').submit(callAPI)
     $('#getAllCarsButton').click(getAllCars);
-    var allowedURLs = ["https://www.autovaldymas.link/getcars", "http://127.0.0.1:5500/getcars.html"];
+    var allowedURLs = ["https://www.autovaldymas.link/getcars","https://www.autovaldymas.link/carRental", "http://127.0.0.1:5500/getcars.html"];
     if (allowedURLs.includes(window.location.href)) {
         // If the URL matches, call the getAllCars function
         //getAllCars();
@@ -67,13 +67,33 @@ var getAllCars = () => {
         headers: myHeaders,
         redirect: 'follow'
     };
-    console.log(requestOptions)
+
+
+    //REIK išritni
+    //REIK išritni
+    //REIK išritni
+    //REIK išritni
+    //REIK išritni
+    //REIK išritni
+    //REIK išritni
+    //REIK išritni
+
+    //console.log(requestOptions)
     // Make API call to get all cars and use promises to handle the response
-    fetch("https://z5mqqjq6dg.execute-api.eu-west-1.amazonaws.com/test1", requestOptions)
+    fetch("https://z5mqqjq6dg.execute-api.eu-west-1.amazonaws.com/test1/CarsDB", requestOptions)
         .then(response => response.json()) // Assuming the response is in JSON format
         .then(result => {
             // Process the result (array of cars)
-            console.log(result);
+             //REIK išritni
+    //REIK išritni
+    //REIK išritni
+    //REIK išritni
+    //REIK išritni
+    //REIK išritni
+    //REIK išritni
+    //REIK išritni
+    
+         //  console.log(result);
             
             // Update the container element with the dynamic table
             updateTable(result);
@@ -87,7 +107,7 @@ var updateTable = (cars) => {
 
     // Create a dynamic table
     var tableHTML = '<table border="1">';
-    tableHTML += '<tr><th>Model</th><th>License Plate</th><th>Gearbox</th><th>Release Year</th><th>Insurance Date</th><th>Tech Date</th><th>Power</th><th>Drivebase</th></tr>';
+    tableHTML += '<tr><th>Model</th><th>License Plate</th><th>Gearbox</th><th>Release Year</th><th>Insurance Date</th><th>Tech Date</th><th>Power</th><th>Rezervuoti</th></tr>';
 
     // Iterate through the cars array and add rows to the table
     cars.forEach(car => {
@@ -96,10 +116,11 @@ var updateTable = (cars) => {
         tableHTML += '<td>' + car.carsDBLicensePlate + '</td>';
         tableHTML += '<td>' + car.carsDBGearbox + '</td>';
         tableHTML += '<td>' + car.carsDBReleaseYear + '</td>';
-        tableHTML += '<td>' + car.carsDBInsuranceDate + '</td>';
-        tableHTML += '<td>' + car.carsDBTechDate + '</td>';
+        //tableHTML += '<td>' + car.carsDBInsuranceDate + '</td>';
+       // tableHTML += '<td>' + car.carsDBTechDate + '</td>';
         tableHTML += '<td>' + car.carsDBPower + '</td>';
         tableHTML += '<td>' + car.carsDBdrivebase + '</td>';
+        tableHTML += '<td>' +'<button id="reservationButton">Rezervuoti automobilį</button></td>';
         tableHTML += '</tr>';
     });
 
