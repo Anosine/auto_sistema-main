@@ -1,3 +1,5 @@
+
+
 $(function onDocReady() {
     $('#reservationButton').click(openReservationModal)
    // var allowedURLs = ["https://www.autovaldymas.link/getcars","https://www.autovaldymas.link/carRental", "http://127.0.0.1:5500/carRental.html"];
@@ -162,10 +164,10 @@ function submitReservation() {
     //var selectedCarId = document.getElementById('selectedCarId').value;
     console.log (startDate, endDate)
     // Validate the form data (add your own validation logic)
-  
+    
     // Construct the reservation object
     var reservationData = {
-      TripsDB: "09",
+      ReserveID: generateId(),
       startDate: startDate,
       endDate: endDate,
       carId: carId,
@@ -182,7 +184,7 @@ function submitReservation() {
         body: JSON.stringify(reservationData),
         redirect: 'follow'
     };    
-    fetch("https://z5mqqjq6dg.execute-api.eu-west-1.amazonaws.com/test1/TripsDB", requestOptions)
+    fetch("https://z5mqqjq6dg.execute-api.eu-west-1.amazonaws.com/test1/Reservation", requestOptions)
             .then(response => response.json())
             .then(result => {
                 // Handle the result as needed
@@ -211,18 +213,111 @@ function submitReservation() {
 
     // Make API call to save reservation to Reservation database
     //saveReservation(reservationData);
-  
-    // Optionally, update the CarsDB to mark the car as reserved
-    //markCarAsReserved(selectedCarId);
-  
+    markCarAsReserved(carId);
+    
+    //updateTableRental(result);        
     // Close the reservation modal
     closeReservationModal();
-  
+    ReserveListRead()        
     console.log(startDate, carId, endDate);
 }
-  
 
 
+
+var yourResListRead = () => {
+    if(cognitoUser){
+        // Instantiate a Headers object
+    var myHeaders = new Headers();
+    // Add content type header to object
+    myHeaders.append("Content-Type", "application/json");
+
+    // Create a JSON object with parameters for API call and store in a variable
+    var requestOptions = {
+        method: 'GET', // Use GET method for retrieving data
+        headers: myHeaders,
+        redirect: 'follow'
+    };
+
+    // Make API call to get all cars and use promises to handle the response
+    fetch("https://z5mqqjq6dg.execute-api.eu-west-1.amazonaws.com/test1/Reservation", requestOptions)
+        .then(response => response.json()) // Assuming the response is in JSON format
+        .then(result => {
+            // Update the container element with the dynamic table
+            updateTableYourReservations(result);
+        })
+        .catch(error => console.log('error', error));
+};}
+
+
+var updateTableYourReservations = (Reservations) => {
+    // Assuming you have a container element with ID 'tableContainer'
+    var tableContainer = $('#yourReservationTable');
+
+    // Create a dynamic table
+    var tableHTML = '<table border="1">';
+    tableHTML += '<tr><th>Rezervacijos ID</th><th>Automobilis</th><th>Pradžia</th><th>Pabaiga</th><th>Atšaukti</th></tr>';
+    updateGlobalUserData();
+    console.log(globalUsername);
+   
+    //Tik atviras rezervacijas rodyti
+    /*var OnlyOpen
+    if (onlyOpen) {
+        OnlyChecked = "Neužimta";
+    }
+    else {
+        OnlyChecked = "all";
+    }*/
+
+    // Iterate through the cars array and add rows to the table
+    Reservations.forEach(reservation => {
+        if (reservation.globalUsername === globalUsername){
+        tableHTML += '<tr>';
+        tableHTML += '<td>' + reservation.ReserveID + '</td>';
+        tableHTML += '<td>' + reservation.carId + '</td>';
+        tableHTML += '<td>' + reservation.startDate + '</td>';
+        tableHTML += '<td>' + reservation.endDate + '</td>';
+        tableHTML += '<td>' +'<button id="cancelReservationButton" /onclick="cancelReservation()">Atšaukti</button></td>';
+        tableHTML += '</tr>';
+        }
+    }
+    );
+
+    tableHTML += '</table>';
+
+    // Update the content of the container element
+    tableContainer.html(tableHTML);
+};
+
+function cancelReservation()
+{
+    
+}
+
+
+
+
+
+yourResListRead();
+updateTableYourReservations();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function generateId(){
+    return Date.now().toString(36) + Math.random().toString(36).substr(2);
+    }
 
 function saveReservation(reservationData) {
     // Make API call to your Reservation database
@@ -243,9 +338,93 @@ function saveReservation(reservationData) {
   }
 
 function markCarAsReserved(carId) {
-  // Make API call to update CarsDB to mark the car as reserved
+    var reservationData = {
+        CarId: carId,
+        carsDBUsability: "Rezervuota"
+      };
+      console.log(reservationData);
+      var myHeaders = new Headers();
+      // Add content type header to object
+      myHeaders.append("Content-Type", "application/json");
+   
+      var requestOptions = {
+          method: 'PATCH', // Use POST method for sending data
+          headers: myHeaders,
+          body: JSON.stringify(reservationData),
+          redirect: 'follow'
+      };    
+      fetch("https://z5mqqjq6dg.execute-api.eu-west-1.amazonaws.com/test1/CarsDB", requestOptions)
+              .then(response => response.json())
+              .then(result => {
+                  // Handle the result as needed
+                  console.log('Result:', result);
+              })
+              .catch(error => console.error('Error:', error));
+      
+    // Make API call to update CarsDB to mark the car as reserved
   // This depends on your CarsDB structure and API endpoint
 }
+
+function markCarAsFree(carId) {
+    var reservationData = {
+        CarId: carId,
+        carsDBUsability: "Neužimta"
+      };
+      console.log(reservationData);
+      var myHeaders = new Headers();
+      // Add content type header to object
+      myHeaders.append("Content-Type", "application/json");
+   
+      var requestOptions = {
+          method: 'PATCH', // Use POST method for sending data
+          headers: myHeaders,
+          body: JSON.stringify(reservationData),
+          redirect: 'follow'
+      };    
+      fetch("https://z5mqqjq6dg.execute-api.eu-west-1.amazonaws.com/test1/CarsDB", requestOptions)
+              .then(response => response.json())
+              .then(result => {
+                  // Handle the result as needed
+                  console.log('Result:', result);
+              })
+              .catch(error => console.error('Error:', error));
+      
+    // Make API call to update CarsDB to mark the car as reserved
+  // This depends on your CarsDB structure and API endpoint
+}
+
+function deleteReservation(ReservationID) {
+    var reservationData = {
+        CarId: carId,
+        R: "Neužimta"
+      };
+      console.log(reservationData);
+      var myHeaders = new Headers();
+      // Add content type header to object
+      myHeaders.append("Content-Type", "application/json");
+   
+      var requestOptions = {
+          method: 'PATCH', // Use POST method for sending data
+          headers: myHeaders,
+          body: JSON.stringify(reservationData),
+          redirect: 'follow'
+      };    
+      fetch("https://z5mqqjq6dg.execute-api.eu-west-1.amazonaws.com/test1/CarsDB", requestOptions)
+              .then(response => response.json())
+              .then(result => {
+                  // Handle the result as needed
+                  console.log('Result:', result);
+              })
+              .catch(error => console.error('Error:', error));
+      
+    // Make API call to update CarsDB to mark the car as reserved
+  // This depends on your CarsDB structure and API endpoint
+}
+
+
+
+
+
 console.log(startDate, carId, endDate);
 /*document.getElementById('tableContainer').addEventListener('click', function (event) {
     if (event.target.classList.contains('reservationButton')) {
