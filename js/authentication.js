@@ -81,6 +81,7 @@ function updateGlobalUserData() {
           globalUsername = cognitoUser.username;
           globalName = findAttributeValue(attributes, 'name');
           globalRole = findAttributeValue(attributes, 'custom:Role');
+          globalTrip = findAttributeValue(attributes, 'custom:Trip');
 
           console.log('Global user information updated:', {
             username: globalUsername,

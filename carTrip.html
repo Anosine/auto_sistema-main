@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Auto sistema</title>
+
+    <!-- Montserrat Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+  </head>
+  <body>
+    <div class="grid-container">
+
+      <!-- Header -->
+      <header class="header">
+        <div class="menu-icon" onclick="openSidebar()">
+          <span class="material-icons-outlined">menu</span>
+        </div>
+        <div class="header-left">
+          <span class="material-icons-outlined"></span>
+        </div>
+        <div id="topBanner">Esate prisijungę</div>
+        <div class="header-right">
+          <span class="material-icons-outlined">notifications</span>
+          <span class="material-icons-outlined" style="padding-right: 65px;">email</span>
+
+          <div class="action">
+            <div class="profile" onclick="menuToggle();">
+              <img id="profileImageElement" src="images/user.jpg" alt="">
+            </div>
+    
+            <div class="menu">
+              <ul>
+                <li>
+                  <span class="material-icons-outlined" id="profileIcon" >person</span>
+                  <a href="/Profile.html" id="profileLink">Redaguoti profilį</a>
+                </li>
+                <li>
+                  <span class="material-icons-outlined">settings</span>
+                  <a href="/settings.html" >Nustatymai</a>
+                </li>
+                <li>
+                  <span class="material-icons-outlined" id="loginIcon">login</span>
+                  <a href="/login.html" id="loginLink"> Prisijungti</a>
+                </li>
+                <li>
+                  <span class="material-icons-outlined" id="logoutIcon" >logout</span>
+                  <a href="#" id="logoutLink" onclick="logout()">Atsijungti</a>
+                </li>
+                </ul>
+            </div>
+          </div>
+        </div>
+      </header>
+      <!-- End Header -->
+
+      <!-- Sidebar -->
+      <aside id="sidebar">
+        <div class="sidebar-title">
+          <div class="sidebar-brand">
+            <span class="material-icons-outlined">directions_car</span> Automobilių valdymo sistema
+          </div>
+          <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
+        </div>
+
+        <ul class="sidebar-list">
+          <li class="sidebar-list-item">
+            <a href="/index.htmls" target="_self">
+              <span class="material-icons-outlined">dashboard</span> Dashboard
+            </a>
+          </li>
+          <li class="sidebar-list-item">
+            <a href="/carRental.html" target="_self">
+              <span class="material-icons-outlined">car_rental</span> Realaus laiko stebėsena
+            </a>
+          </li>
+          <li class="sidebar-list-item">
+            <a href="/cars.html" target="_self">
+              <span class="material-icons-outlined">directions_car</span> Automobiliai
+            </a>
+          </li>
+          <li class="sidebar-list-item">
+            <a href="#" target="_blank">
+              <span class="material-icons-outlined">poll</span> Apžvalga
+            </a>
+          </li>
+        </ul>
+      </aside>
+      <!-- End Sidebar -->
+
+      <!-- Main -->
+      <main class="main-container" >
+        <!-- Checkboxes -->
+        <div id="checkboxContainer">
+          <label>
+             <input type="checkbox" id="onlyFreeCH"> Rodyti tik neužimtus
+          </label>
+          <label>
+             <input type="checkbox" id="onlyBusyCH"> Rodyti tik užimtus
+          </label>
+          <label>
+             <input type="checkbox" id="onlyReservedCH"> Rodyti tik rezervuotus
+          </label>
+       </div>
+        <div id="tableContainer" class="table" >
+
+  <!-- Dynamic table from carsDB.js-->
+    
+
+ 
+    
+          </div>
+
+
+          <button id="getAllCarsButton" onclick="ReserveListRead(); yourResListRead()">Refresh</button>
+
+
+          <div id="checkboxContainer">
+            <label>
+               <input type="checkbox" id="onlyOpenCh"> Rodyti tik atviras
+            </label>
+
+         </div>
+          <div id="yourReservationTable" class="table" >
+
+            <!-- Dynamic table from carsDB.js-->
+              
+          
+           
+              
+          </div>   
+
+      </main> 
+      <!-- End Main -->
+
+  
+
+    <!-- Reservation Modal -->
+<div id="reservationModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeReservationModal()">&times;</span>
+      <h2>Rezervacija</h2>
+      <form id="reservationForm">
+        <label for="startDate">Pasirinkite rezervacijos pradžios datą:</label><br>
+        <input type="date" id="startDate" name="startDate" required>
+        <br>
+        <label for="endDate">Pasirinkite rezervacijos pabaigos datą:</label><br>
+        <input type="date" id="endDate" name="endDate" required>
+        <br><br>
+        <input type="button" onclick = submitReservation() value="Rezervuoti">
+    </form>
+    </div>
+</div>
+<!-- End Reservation Modal -->
+
+    <!-- Scripts -->
+    <!-- Custom JS -->
+    <script src="js/vendor/jquery-3.1.0.js"></script>
+    <script src="js/vendor/bootstrap.min.js"></script>
+    <script src="js/vendor/aws-cognito-sdk.min.js"></script>
+    <script src="js/vendor/amazon-cognito-identity.min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/cognito-auth.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aws-sdk/2.1134.0/aws-sdk.min.js"></script>
+    <script src="js/authentication.js"></script>
+    <script src="js/carsDB.js"></script>
+    <script src="js/carRental.js"></script>
+    <script src="js/scripts.js"></script>
+  </body>
+</html>

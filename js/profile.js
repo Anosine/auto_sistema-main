@@ -123,3 +123,30 @@ function saveChanges() {
     editProfileButton.style.display = 'inline-block';
   });
 }
+
+
+function userTripChange (integer)
+{
+  var profileTrip = {};
+  if(integer) {
+    profileTrip =
+      {
+        Name: 'custom:Trip',
+        Value: 1
+      } 
+      }
+  else{
+    profileTrip =
+      {
+        Name: 'custom:Trip',
+        Value: 0
+      }
+  }
+  cognitoUser.updateAttributes(profileTrip, function (err, result) {
+    if (err) {
+      console.log(err);
+      alert('Failed to update profile. Please try again.');
+      return;
+}
+});
+}
