@@ -111,3 +111,35 @@ var updateTable = (cars) => {
     // Update the content of the container element
     tableContainer.html(tableHTML);
 };
+
+
+function getonecar(CarId)
+{
+    // Instantiate a Headers object
+    var myHeaders = new Headers();
+    // Add content type header to object
+    myHeaders.append("Content-Type", "application/json");
+
+    // Create a JSON object with parameters for API call and store in a variable
+    var requestOptions = {
+        method: 'GET', // Use GET method for retrieving data
+        headers: myHeaders,
+        redirect: 'follow'
+    };
+
+    //CarId
+
+
+    // Make API call to get all cars and use promises to handle the response
+    return fetch("https://z5mqqjq6dg.execute-api.eu-west-1.amazonaws.com/test1/CarsDB?CarId="+CarId, requestOptions)
+        .then(response => response.json()) // Assuming the response is in JSON format
+        .then(result => {
+            // Process the result (array of cars)
+            console.log('Result:', result);
+            // Update the container element with the dynamic table
+            return result;
+        })
+        .catch(error => console.log('error', error));    
+
+}
+

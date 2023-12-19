@@ -29,19 +29,40 @@ async function showPage()
     //if no active trip show reserve list and last trips
 }
 
-function showCurrentTrip(userID)
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+async function showCurrentTrip(userID)
 {
     //Get current Trip info from TripDB send user
+    //await readTrips();
+    readTrips();
+    var carDegalai = "Benzinas"
+    var carName = "test"
+    getonecar("LTJ771")
+        .then(result => {
+            // Handle the result here
+            console.log('testas:', result.carsDBPower);
+            carDegalai = carDegalai;
+            carName = result.carsDBModel
+        })
+    await delay(400);
     var currentTripInfoContainer = $('#currentTripInfo');
-    var html = '<p> Pradžia: ' + /*currentTrip.startDate +-*/ '</p>';
+    var html = '<p> Pradžia: ' +  userCurrentDate + '</p>';
     // Calculate and display time elapsed (you may need to implement this)
      html += '<button onclick="endTrip()">Problema mašinai</button>';
-     html += '<p>Automobilis: ' /*+ calculateTimeElapsed(currentTrip.startDate) +*/ +'</p>';
-     html += '<p>Numeriai: ' /*+ calculateTimeElapsed(currentTrip.startDate) +*/ +'</p>';
-     html += '<p>Kuro tipas: ' /*+ calculateTimeElapsed(currentTrip.startDate) +*/ +'</p>';
-     html += '<button onclick="endTrip()">End Trip</button>';
+     html += '<p>Automobilis: '+ carName +'</p>';
+     html += '<p>Numeriai: ' + userCurrentCarId +'</p>';
+     html += '<p>Kuro tipas: ' + carDegalai +'</p>';
+     html += '<button onclick="openEndTripModal(this)">Baigti kelionę</button>';
     currentTripInfoContainer.html(html);
 }
+
+
+
+
+
 
 function readReservations()
 {
@@ -136,6 +157,8 @@ function readTrips()
 }
 
 var userCurrentTripID = "testasss";
+var userCurrentDate = "testasss";
+var userCurrentCarId = "testasss";
 
 function tripsList(trips)
 {
@@ -148,6 +171,8 @@ function tripsList(trips)
         if (trip.globalUsername === globalUsername){
            if (trip.tripStatus === "Aktyvi" ){
            userCurrentTripID = trip.TripsDB;
+           userCurrentDate = trip.startDate;
+           userCurrentCarId = trip.carId;
            }           
         tableHTML += '<tr>';
         tableHTML += '<td>' + trip.TripsDB + '</td>';
@@ -172,6 +197,25 @@ function tripsList(trips)
 
 
 
+
+
+function openEndTripModal(event)
+{
+    carId = $(event).closest('tr').find('td:nth-child(2)').text();
+    // Pass the carId to the modal for reference
+    updateGlobalUserData();
+    console.log(globalUsername);
+
+    endTripModal.style.display = 'flex';
+  
+}
+
+function closeEndTripModal(event)
+{
+    document.getElementById('endTripModal').style.display = 'none';
+  
+}
+
 function openTripModal(event)
 {
     carId = $(event).closest('tr').find('td:nth-child(2)').text();
@@ -183,8 +227,7 @@ function openTripModal(event)
 
     tripModal.style.display = 'flex';
   
-}
-
+} 
 function closeTripModal()
 {
     document.getElementById('tripModal').style.display = 'none';
@@ -222,7 +265,8 @@ function submitTrip()
     
          
     closeTripModal();
-    showPage();        
+    showPage(); 
+    //location.reload();       
 }
 
 
@@ -252,13 +296,15 @@ function endTrip()
     };
 
     // Make API call to get all cars and use promises to handle the response
-    fetch("https://z5mqqjq6dg.execute-api.eu-west-1.amazonaws.com/test1/TripDB", requestOptions)
+    fetch("https://z5mqqjq6dg.execute-api.eu-west-1.amazonaws.com/test1/TripsDB", requestOptions)
         .then(response => response.json()) // Assuming the response is in JSON format
         .then(result => {
             // Update the container element with the dynamic table
             tripsList(result);
         })
         .catch(error => console.log('error', error));
+    closeEndTripModal();
+    //location.reload();
 }
     //TripDB change complete
 
@@ -266,14 +312,7 @@ function endTrip()
 
     //CarsDB change status free
 
-    rateTrip();
-    {
-        if(issue)
-        {
-            createIssue();
-        }
-        else{}
-    }    
+   
     //Ends the trip, changes: 
       //reservation as complete
       //trip as ended

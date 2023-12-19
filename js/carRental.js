@@ -441,7 +441,7 @@ function deleteReservation(ReservationID) {
 
 
 
-console.log(startDate, carId, endDate);
+//console.log(startDate, carId, endDate);
 /*document.getElementById('tableContainer').addEventListener('click', function (event) {
     if (event.target.classList.contains('reservationButton')) {
       // Extract carId from the closest <tr> element

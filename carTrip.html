@@ -129,13 +129,23 @@
     <div class="modal-content">
       <span class="close" onclick="closeTripModal()">&times;</span>
       <h2>Ar tikrai norite pradėti kelionę?</h2>
-      <form id="reservationForm">
+      <form>
 
         <input type="button" onclick = submitTrip() value="PRADĖTI">
     </form>
     </div>
 </div>
 <!-- End Trip Modal -->
+<div id="endTripModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeTripModal()">&times;</span>
+    <h2>Ar tikrai norite baigti kelionę?</h2>
+    <form>
+
+      <input type="button" onclick = endTrip() value="BAIGTI">
+  </form>
+  </div>
+</div>
 
     <!-- Scripts -->
     <!-- Custom JS -->
