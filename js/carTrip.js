@@ -38,13 +38,15 @@ async function showCurrentTrip(userID)
     //Get current Trip info from TripDB send user
     //await readTrips();
     readTrips();
-    var carDegalai = "Benzinas"
+    var carDegalai = "Benzinas2"
     var carName = "test"
-    getonecar("LTJ771")
+    
+    await delay(400);
+    getonecar(userCurrentCarId)
         .then(result => {
             // Handle the result here
             console.log('testas:', result.carsDBPower);
-            carDegalai = carDegalai;
+            carDegalai = result.carsDBFuel;
             carName = result.carsDBModel
         })
     await delay(400);
