@@ -18,6 +18,7 @@ function callAPI(event)  {
     var carsDBTechDate = $('#carsDBTechDate').val();
     var carsDBPower = $('#carsDBPower').val();
     var carsDBdrivebase = $('#carsDBdrivebase').val();
+    var carsDBfuelType = $('#carsDBfuelType').val();
 
     // Create a JSON object with the variables
     var requestData = {
@@ -29,7 +30,8 @@ function callAPI(event)  {
         carsDBInsuranceDate: carsDBInsuranceDate,
         carsDBTechDate: carsDBTechDate,
         carsDBPower: carsDBPower,
-        carsDBdrivebase: carsDBdrivebase
+        carsDBdrivebase: carsDBdrivebase,
+        carsDBfuelType: carsDBfuelType
     };
 
     // Convert the JSON object to a string
@@ -69,32 +71,12 @@ var getAllCars = () => {
     };
 
 
-    //REIK išritni
-    //REIK išritni
-    //REIK išritni
-    //REIK išritni
-    //REIK išritni
-    //REIK išritni
-    //REIK išritni
-    //REIK išritni
-
-    //console.log(requestOptions)
     // Make API call to get all cars and use promises to handle the response
     fetch("https://z5mqqjq6dg.execute-api.eu-west-1.amazonaws.com/test1/CarsDB", requestOptions)
         .then(response => response.json()) // Assuming the response is in JSON format
         .then(result => {
             // Process the result (array of cars)
-             //REIK išritni
-    //REIK išritni
-    //REIK išritni
-    //REIK išritni
-    //REIK išritni
-    //REIK išritni
-    //REIK išritni
-    //REIK išritni
-    
-         //  console.log(result);
-            
+ 
             // Update the container element with the dynamic table
             updateTable(result);
         })

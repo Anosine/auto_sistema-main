@@ -1,6 +1,7 @@
 var globalUsername = "test";
 var globalName= "test";
 var globalRole= "test";
+var globalTrip= "test";
 
 
 
@@ -29,10 +30,6 @@ $(document).ready(function () {
     loginIcon.style.display = "none";
     loginLink.style.display = "none";
 
-    var allowedURLs = ["https://www.autovaldymas.link/getcars", "http://127.0.0.1:5500/getcars.html"];
-    if (allowedURLs.includes(window.location.href)) {
-      getAllCars();
-    }
   } else {
     // User is not authenticated, handle accordingly (e.g., update the top banner)
     var topBanner = document.getElementById('topBanner');
@@ -82,17 +79,19 @@ function updateGlobalUserData() {
           globalName = findAttributeValue(attributes, 'name');
           globalRole = findAttributeValue(attributes, 'custom:Role');
           globalTrip = findAttributeValue(attributes, 'custom:Trip');
-
+          console.log('User attributes:', attributes);
           console.log('Global user information updated:', {
             username: globalUsername,
             name: globalName,
             role: globalRole,
+            trip: globalTrip,
           });
 
           resolve({
             username: globalUsername,
             name: globalName,
             role: globalRole,
+            trip: globalTrip,
           });
         });
       });
@@ -109,6 +108,7 @@ async function initializeApp() {
     console.log('Global username:', globalUsername);
     console.log('Global name:', globalName);
     console.log('Global role:', globalRole);
+    console.log('Global trip:', globalTrip);
 
     // Update the top banner with user information
     var topBanner = document.getElementById('topBanner');
@@ -118,10 +118,31 @@ async function initializeApp() {
   }
 }
 
-// Call the initialization function after the document is ready
-$(document).ready(function () {
-  initializeApp();
-});
+function userTripChange(trip)
+{
+  console.log(cognitoUser);
+  var profileTrip = [];
+  if (trip===1) {
+    profileTrip.push({
+      Name: 'custom:Trip',
+      Value: '1' // Assuming the value should be a string
+    });
+  } else {
+    profileTrip.push({
+      Name: 'custom:Trip',
+      Value: '0' // Assuming the value should be a string
+    });
+  }
+
+  cognitoUser.updateAttributes(profileTrip, function (err, result) {
+    if (err) {
+      console.log(err);
+      alert('Failed to update profile. Please try again.');
+      return;
+    }
+    // Handle successful update if needed
+  });
+}
 
 function findAttributeValue(attributes, name) {
   var attribute = attributes.find(attr => attr.getName() === name);
@@ -129,7 +150,6 @@ function findAttributeValue(attributes, name) {
 }
 
 // Atsijungimas:
-// logoutLink.addEventListener('click', logout);
 function logout() {
   // Sign out the user
   cognitoUser.signOut();

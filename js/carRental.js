@@ -2,12 +2,40 @@
 
 $(function onDocReady() {
     $('#reservationButton').click(openReservationModal)
-   // var allowedURLs = ["https://www.autovaldymas.link/getcars","https://www.autovaldymas.link/carRental", "http://127.0.0.1:5500/carRental.html"];
-    //if (allowedURLs.includes(window.location.href)) {
+   var allowedURLs = ["https://www.autovaldymas.link/getcars","https://www.autovaldymas.link/carRental", "http://127.0.0.1:5500/carRental.html"];
+    if (allowedURLs.includes(window.location.href)) {
         // If the URL matches, call the getAllCars function
     ReserveListRead();
-   
-    //}    
+    yourResListRead();
+    UpdateTableYourReservations();  
+    
+    // Attach event listeners to the checkboxes
+document.getElementById('onlyFreeCH').addEventListener('change', function () {
+    // ReserveListRead();
+     updateCheckboxValues();
+     //updateTable(cars); // Update the table based on checkbox changes
+ });
+ 
+ document.getElementById('onlyBusyCH').addEventListener('change', function () {
+    // ReserveListRead();
+     updateCheckboxValues();
+     //updateTable(cars); // Update the table based on checkbox changes
+ });
+ document.getElementById('onlyReservedCH').addEventListener('change', function () {
+    // ReserveListRead();
+     updateCheckboxValues();
+     //updateTable(cars); // Update the table based on checkbox changes
+ });
+ document.getElementById('onlyOpenCh').addEventListener('change', function () {
+     // ReserveListRead();
+      updateCheckboxValues();
+      //updateTable(cars); // Update the table based on checkbox changes
+  });
+  
+
+
+
+    }    
 });
 
 if(getUserFromLocalStorage()){
@@ -110,29 +138,7 @@ function closeReservationModal() {
 
 
 
-// Attach event listeners to the checkboxes
-document.getElementById('onlyFreeCH').addEventListener('change', function () {
-   // ReserveListRead();
-    updateCheckboxValues();
-    //updateTable(cars); // Update the table based on checkbox changes
-});
 
-document.getElementById('onlyBusyCH').addEventListener('change', function () {
-   // ReserveListRead();
-    updateCheckboxValues();
-    //updateTable(cars); // Update the table based on checkbox changes
-});
-document.getElementById('onlyReservedCH').addEventListener('change', function () {
-   // ReserveListRead();
-    updateCheckboxValues();
-    //updateTable(cars); // Update the table based on checkbox changes
-});
-document.getElementById('onlyOpenCh').addEventListener('change', function () {
-    // ReserveListRead();
-     updateCheckboxValues();
-     //updateTable(cars); // Update the table based on checkbox changes
- });
- 
 
 console.log(globalName);
 
@@ -332,8 +338,7 @@ function cancelReservation(event)
 
 
 
-yourResListRead();
-updateTableYourReservations();
+
 
 
 

@@ -96,68 +96,46 @@
 
       <!-- Main -->
       <main class="main-container" >
-        <!-- Checkboxes -->
-        <div id="checkboxContainer">
-          <label>
-             <input type="checkbox" id="onlyFreeCH"> Rodyti tik neužimtus
-          </label>
-          <label>
-             <input type="checkbox" id="onlyBusyCH"> Rodyti tik užimtus
-          </label>
-          <label>
-             <input type="checkbox" id="onlyReservedCH"> Rodyti tik rezervuotus
-          </label>
+        <div id="lentelesArkelione"></div>
+        <h5 ></h5> 
+        <div id="possibleTripsTable" class="table" >
+  <!-- Trips table-->
        </div>
-        <div id="tableContainer" class="table" >
 
-  <!-- Dynamic table from carsDB.js-->
-    
-
- 
-    
-          </div>
+       <div id="currentTripInfo" class="current-trip-info">
+        <!-- Display current trip information here -->
+      </div>
+          
 
 
-          <button id="getAllCarsButton" onclick="ReserveListRead(); yourResListRead()">Refresh</button>
-
-
-          <div id="checkboxContainer">
-            <label>
-               <input type="checkbox" id="onlyOpenCh"> Rodyti tik atviras
-            </label>
-
-         </div>
-          <div id="yourReservationTable" class="table" >
+          <h5 >Jūsų kelionės:</h5>
+          <div id="tripHistroyTable" class="table" >
 
             <!-- Dynamic table from carsDB.js-->
               
           
            
               
-          </div>   
-
+          </div>  
+          <h5></h5> 
+          <button id="getAllCarsButton" onclick="readTrips(); readReservations()">Atnaujinti</button>
       </main> 
       <!-- End Main -->
 
   
 
-    <!-- Reservation Modal -->
-<div id="reservationModal" class="modal">
+    <!-- Trip Modal -->
+<div id="tripModal" class="modal">
     <div class="modal-content">
-      <span class="close" onclick="closeReservationModal()">&times;</span>
-      <h2>Rezervacija</h2>
+      <span class="close" onclick="closeTripModal()">&times;</span>
+      <h2>Ar tikrai norite pradėti kelionę?</h2>
       <form id="reservationForm">
-        <label for="startDate">Pasirinkite rezervacijos pradžios datą:</label><br>
-        <input type="date" id="startDate" name="startDate" required>
-        <br>
-        <label for="endDate">Pasirinkite rezervacijos pabaigos datą:</label><br>
-        <input type="date" id="endDate" name="endDate" required>
-        <br><br>
-        <input type="button" onclick = submitReservation() value="Rezervuoti">
+
+        <input type="button" onclick = submitTrip() value="PRADĖTI">
     </form>
     </div>
 </div>
-<!-- End Reservation Modal -->
+<!-- End Trip Modal -->
 
     <!-- Scripts -->
     <!-- Custom JS -->
@@ -172,5 +150,6 @@
     <script src="js/carsDB.js"></script>
     <script src="js/carRental.js"></script>
     <script src="js/scripts.js"></script>
+    <script src="js/carTrip.js"></script>
   </body>
 </html>
