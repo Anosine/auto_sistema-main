@@ -1,5 +1,75 @@
 
 
+function hideStart(){
+document.getElementById('yourReservationTable').style.display = 'none';
+document.getElementById('JusuRez').style.display = 'none';
+document.getElementById('G').style.display = 'none';
+}
+async function searchReservations() {
+    try {
+      // Get the values from the date pickers
+      var startDate = document.getElementById("startDatePicker").value;
+      var endDate = document.getElementById("endDatePicker").value;
+      //console.log("testas arrayOfUsableCars")  
+      // Call the DBReserCheck function
+      var result = await DBReserCheck(startDate, endDate);
+      
+      
+      console.log("rezulatatas searchRes", result);
+      // Display the result (you can customize this part based on your needs)
+      var resultDiv = document.getElementById("result");
+      if(result.length==0)
+      {
+        document.getElementById('G').style.display = 'none';
+        document.getElementById('tableContainer').style.display = 'none';
+        resultDiv.innerHTML = `<p>Nerasta laisvų automobilių</p>`;
+      }
+      else
+      {
+        document.getElementById('G').style.display = 'block';
+        document.getElementById('tableContainer').style.display = 'block';
+        await updateTableRental(result);
+        //resultDiv.innerHTML = `<br>            Rasti automobiliai:`;
+      }
+      
+     // resultDiv.innerHTML = `<p>Viable Cars: ${result.join(', ')}</p>`;
+      
+        
+
+      //await updateTableRental(await DBCarGetOne(CarId))
+
+    } catch (error) {
+      console.error('Error in searchReservations:', error);
+    }
+  }
+
+
+// Push Reserve
+
+
+//If logged in show users reservations
+
+$(function onDocReady() {
+hideStart();
+})
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+
+
+//OLD code:
+
 $(function onDocReady() {
     $('#reservationButton').click(openReservationModal)
    var allowedURLs = ["https://www.autovaldymas.link/getcars","https://www.autovaldymas.link/carRental", "http://127.0.0.1:5500/carRental.html"];
@@ -82,34 +152,19 @@ function updateCheckboxValues() {
             .catch(error => console.log('error', error));
     };}
 
-
+*/
     var updateTableRental = (cars) => {
         // Assuming you have a container element with ID 'tableContainer'
         var tableContainer = $('#tableContainer');
-    
+        
         // Create a dynamic table
         var tableHTML = '<table border="1">';
-        tableHTML += '<tr><th>Automobilis</th><th>Numeriai</th><th>Pav. dėžė</th><th>Metai</th><th>Galia</th><th>Varantieji</th><th>Užimtumas</th><th>Rezervuoti</th></tr>';
-       
-       
-       
-        var OnlyChecked
-        if (onlyFree) {
-            OnlyChecked = "Neužimta";
-        }
-        else if (onlyBusy) {
-            OnlyChecked = "Užimta";
-        }
-        else if (onlyReserved) {
-            OnlyChecked = "Rezervuota";
-        }
-        else {
-            OnlyChecked = "all";
-        }
-
+        tableHTML += '<tr><th>Automobilis</th><th>Numeriai</th><th>Pav. dėžė</th><th>Metai</th><th>Galia, kW</th><th>Varantieji</th><th>Rezervuoti</th></tr>';
+        console.log("pries",cars);
+        console.log("po",cars);
         // Iterate through the cars array and add rows to the table
         cars.forEach(car => {
-            if (car.carsDBUsability === OnlyChecked || OnlyChecked === "all"  ){
+            if (car.carsDBUsability=="Neužimta"){
             tableHTML += '<tr>';
             tableHTML += '<td>' + car.carsDBModel + '</td>';
             tableHTML += '<td>' + car.CarId + '</td>';
@@ -117,13 +172,12 @@ function updateCheckboxValues() {
             tableHTML += '<td>' + car.carsDBReleaseYear + '</td>';
             tableHTML += '<td>' + car.carsDBPower + '</td>';
             tableHTML += '<td>' + car.carsDBdrivebase + '</td>';
-            tableHTML += '<td>' + car.carsDBUsability + '</td>';
+            //tableHTML += '<td>' + car.carsDBUsability + '</td>';
             tableHTML += '<td>' +'<button id="reservationButton" /onclick="openReservationModal(this)">Rezervuoti</button></td>';
             tableHTML += '</tr>';
             }
         }
         );
-    
         tableHTML += '</table>';
     
         // Update the content of the container element
@@ -136,27 +190,23 @@ function closeReservationModal() {
     document.getElementById('reservationModal').style.display = 'none';
 }
 
-console.log(globalName);
-}
-
-
-
 function openReservationModal(event) {
     carId = $(event).closest('tr').find('td:nth-child(2)').text();
+    carModel = $(event).closest('tr').find('td:nth-child(1)').text();
+    console.log(carModel);
+    //console.log(carId);
     updateGlobalUserData();
     reservationModal.style.display = 'flex';
   }
+/*
 
-
-
+*/
 
 function submitReservation() {
     // Get values from the modal form
-    var startDate = document.getElementById('startDate').value;
-    var endDate = document.getElementById('endDate').value;
+    var startDate = document.getElementById('startDatePicker').value;
+    var endDate = document.getElementById('endDatePicker').value;
     //var selectedCarId = document.getElementById('selectedCarId').value;
-    console.log (startDate, endDate)
-    // Validate the form data (add your own validation logic)
     
     // Construct the reservation object
     var reservationData = {
@@ -164,17 +214,14 @@ function submitReservation() {
       startDate: startDate,
       endDate: endDate,
       carId: carId,
+      carsDBModel: carModel,
       globalUsername: globalUsername,
       ReserveStatus: "Aktyvi"
     };
     console.log(reservationData);
-    var myHeaders = new Headers();
-    // Add content type header to object
-    myHeaders.append("Content-Type", "application/json");
  
     var requestOptions = {
         method: 'POST', // Use POST method for sending data
-        headers: myHeaders,
         body: JSON.stringify(reservationData),
         redirect: 'follow'
     };    
@@ -207,29 +254,25 @@ function submitReservation() {
 
     // Make API call to save reservation to Reservation database
     //saveReservation(reservationData);
-    markCarAsReserved(carId);
+    //markCarAsReserved(carId);
     
     //updateTableRental(result);        
     // Close the reservation modal
     closeReservationModal();
-    ReserveListRead();  
+    //ReserveListRead();  
+    searchReservations();
     yourResListRead();     
     console.log(startDate, carId, endDate);
 }
 
 
 
-var yourResListRead = () => {
-    if(cognitoUser){
-        // Instantiate a Headers object
-    var myHeaders = new Headers();
-    // Add content type header to object
-    myHeaders.append("Content-Type", "application/json");
+yourResListRead();
+function yourResListRead () {
 
     // Create a JSON object with parameters for API call and store in a variable
     var requestOptions = {
         method: 'GET', // Use GET method for retrieving data
-        headers: myHeaders,
         redirect: 'follow'
     };
 
@@ -241,179 +284,68 @@ var yourResListRead = () => {
             updateTableYourReservations(result);
         })
         .catch(error => console.log('error', error));
-};}
+}
 
 
-var updateTableYourReservations = (Reservations) => {
+
+async function updateTableYourReservations(Reservations) {
     // Assuming you have a container element with ID 'tableContainer'
     var tableContainer = $('#yourReservationTable');
 
     // Create a dynamic table
     var tableHTML = '<table border="1">';
-    tableHTML += '<tr><th>Rezervacijos ID</th><th>Automobilis</th><th>Pradžia</th><th>Pabaiga</th><th>Aktyvi</th><th>Atšaukti</th></tr>';
-    updateGlobalUserData();
-    console.log(globalUsername);
+    tableHTML += '<tr><th>Numeriai</th><th>Automobilis</th><th>Pradžia</th><th>Pabaiga</th><th>Atšaukti</th></tr>';
+    await updateGlobalUserData();
+    //console.log(globalUsername);
    
     //Tik atviras rezervacijas rodyti
     
     // Iterate through the cars array and add rows to the table
     Reservations.forEach(reservation => {
-        if (reservation.globalUsername === globalUsername){
-            if (reservation.ReserveStatus === "Aktyvi" || onlyOpen === 0  ){
         
+        if (reservation.globalUsername === globalUsername){
+            //console.log(reservation);
+            if (reservation.ReserveStatus === "Aktyvi" ){
+                console.log("bandommmm");
+                document.getElementById('JusuRez').style.display = 'block';
+                document.getElementById('yourReservationTable').style.display = 'block';   
+                document.getElementById('NeturitRez').style.display = 'none';  
             tableHTML += '<tr>';
         tableHTML += '<td>' + reservation.ReserveID + '</td>';
         tableHTML += '<td>' + reservation.carId + '</td>';
+        tableHTML += '<td>' + reservation.carsDBModel + '</td>';
         tableHTML += '<td>' + reservation.startDate + '</td>';
         tableHTML += '<td>' + reservation.endDate + '</td>';
-        tableHTML += '<td>' + reservation.ReserveStatus + '</td>';
+        //tableHTML += '<td>' + reservation.ReserveStatus + '</td>';
         tableHTML += '<td>' +'<button id="cancelReservationButton" /onclick="cancelReservation(this)">Atšaukti</button></td>';
         tableHTML += '</tr>';
         }
-    }}
+    }
+    else{
+    document.getElementById('JusuRez').style.display = 'none';
+    document.getElementById('yourReservationTable').style.display = 'none';   
+    document.getElementById('NeturitRez').style.display = 'block';
+    }
+    }
     );
 
     tableHTML += '</table>';
 
     // Update the content of the container element
     tableContainer.html(tableHTML);
+
+    const firstColumnCells = document.querySelectorAll('#yourReservationTable td:first-child')
+firstColumnCells.forEach(cell => {cell.style.display = 'none';});
 };
 
-function cancelReservation(event)
-{
-    ReservationID = $(event).closest('tr').find('td:nth-child(1)').text();
-    carId = $(event).closest('tr').find('td:nth-child(2)').text();
-    var reservationData = {
-        ReserveID: ReservationID,
-        ReserveStatus: "Cancelled"
-      };
-      console.log(reservationData);
-      var myHeaders = new Headers();
-      // Add content type header to object
-      myHeaders.append("Content-Type", "application/json");
-   
-      var requestOptions = {
-          method: 'PATCH', // Use POST method for sending data
-          headers: myHeaders,
-          body: JSON.stringify(reservationData),
-          redirect: 'follow'
-      };    
-      fetch("https://z5mqqjq6dg.execute-api.eu-west-1.amazonaws.com/test1/Reservation", requestOptions)
-              .then(response => response.json())
-              .then(result => {
-                  // Handle the result as needed
-                  console.log('Result:', result);
-              })
-              .catch(error => console.error('Error:', error));
-    markCarAsFree(carId);
-    ReserveListRead();  
-    yourResListRead();  
-    // Make API call to update CarsDB to mark the car as reserved
-  // This depends on your CarsDB structure and API endpoint
-    
 
+
+async function cancelReservation(event){
+    var ReservationID = $(event).closest('tr').find('td:nth-child(1)').text();
+    await DBReserDelete(ReservationID);
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function saveReservation(reservationData) {
-    // Make API call to your Reservation database
-    // Use fetch or any other preferred method to send data to the server
-    // ...
-  
-    // Example using fetch:
-    // fetch("your_reservation_api_endpoint", {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify(reservationData),
-    // })
-    // .then(response => response.json())
-    // .then(data => console.log('Reservation saved:', data))
-    // .catch(error => console.error('Error saving reservation:', error));
-  }
-
-function markCarAsReserved(carId) {
-    var reservationData = {
-        CarId: carId,
-        carsDBUsability: "Rezervuota"
-      };
-      console.log(reservationData);
-      var myHeaders = new Headers();
-      // Add content type header to object
-      myHeaders.append("Content-Type", "application/json");
-   
-      var requestOptions = {
-          method: 'PATCH', // Use POST method for sending data
-          headers: myHeaders,
-          body: JSON.stringify(reservationData),
-          redirect: 'follow'
-      };    
-      fetch("https://z5mqqjq6dg.execute-api.eu-west-1.amazonaws.com/test1/CarsDB", requestOptions)
-              .then(response => response.json())
-              .then(result => {
-                  // Handle the result as needed
-                  console.log('Result:', result);
-              })
-              .catch(error => console.error('Error:', error));
-      
-    // Make API call to update CarsDB to mark the car as reserved
-  // This depends on your CarsDB structure and API endpoint
-}
-
-function markCarAsFree(carId) {
-    var reservationData = {
-        CarId: carId,
-        carsDBUsability: "Neužimta"
-      };
-      console.log(reservationData);
-      var myHeaders = new Headers();
-      // Add content type header to object
-      myHeaders.append("Content-Type", "application/json");
-   
-      var requestOptions = {
-          method: 'PATCH', // Use POST method for sending data
-          headers: myHeaders,
-          body: JSON.stringify(reservationData),
-          redirect: 'follow'
-      };    
-      fetch("https://z5mqqjq6dg.execute-api.eu-west-1.amazonaws.com/test1/CarsDB", requestOptions)
-              .then(response => response.json())
-              .then(result => {
-                  // Handle the result as needed
-                  console.log('Result:', result);
-              })
-              .catch(error => console.error('Error:', error));
-      
-    // Make API call to update CarsDB to mark the car as reserved
-  // This depends on your CarsDB structure and API endpoint
-}
-
-function deleteReservation(ReservationID) {
-    
-}
 
 
 
