@@ -49,7 +49,14 @@ $(document).ready(function () {
   }
 });
 
-
+function checkRole(level)
+{
+  console.log ("Role", globalRole, ". Level=", level);
+  if (globalRole>=level)
+    return 1;
+  else
+    return 0;
+}
 
 function getUserFromLocalStorage() {
   // Check if there is a user in local storage

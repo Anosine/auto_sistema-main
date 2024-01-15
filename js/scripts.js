@@ -28,8 +28,8 @@ function getCurrentTime() {
 
   // get components
   var year = currentTime.getFullYear();
-  var month = currentTime.getMonth();
-  var day = currentTime.getDay();
+  var month = currentTime.getMonth()+1;
+  var day = currentTime.getDate()
   var hours = currentTime.getHours();
   var minutes = currentTime.getMinutes();
   var seconds = currentTime.getSeconds();
@@ -45,6 +45,23 @@ function getCurrentTime() {
   var formattedTime = year + '-'+ month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
 
   return formattedTime;
+}
+
+//
+function generateId(){
+  return Date.now().toString(36) + Math.random().toString(36).substr(2);
+}
+
+
+function showNotification(message) {
+    var notification = document.getElementById('notification');
+    notification.innerText = message;
+    notification.style.display = 'block';
+
+    // Hide the notification after 3 seconds (adjust as needed)
+    setTimeout(function () {
+        notification.style.display = 'none';
+    }, 3000);
 }
 
 /* PERKELTAS Į carRental.js

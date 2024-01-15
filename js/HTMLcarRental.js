@@ -136,35 +136,15 @@ function closeReservationModal() {
     document.getElementById('reservationModal').style.display = 'none';
 }
 
-
-
-
-
 console.log(globalName);
-
 }
 
 
 
 function openReservationModal(event) {
     carId = $(event).closest('tr').find('td:nth-child(2)').text();
-    // Pass the carId to the modal for reference
-    console.log(carId);
     updateGlobalUserData();
-    console.log(globalUsername);
-
-
-
-
-
-    var modal = document.getElementById('reservationModal');
-
-
-
-
     reservationModal.style.display = 'flex';
-  
-    // You can further customize the modal content based on the selected carId
   }
 
 
@@ -355,9 +335,7 @@ function cancelReservation(event)
 
 
 
-function generateId(){
-    return Date.now().toString(36) + Math.random().toString(36).substr(2);
-    }
+
 
 function saveReservation(reservationData) {
     // Make API call to your Reservation database

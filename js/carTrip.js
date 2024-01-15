@@ -62,36 +62,6 @@ async function showCurrentTrip(userID)
 }
 
 
-
-
-
-
-function readReservations()
-{
-    if(cognitoUser){
-        // Instantiate a Headers object
-    var myHeaders = new Headers();
-    // Add content type header to object
-    myHeaders.append("Content-Type", "application/json");
-
-    // Create a JSON object with parameters for API call and store in a variable
-    var requestOptions = {
-        method: 'GET', // Use GET method for retrieving data
-        headers: myHeaders,
-        redirect: 'follow'
-    };
-
-    // Make API call to get all cars and use promises to handle the response
-    fetch("https://z5mqqjq6dg.execute-api.eu-west-1.amazonaws.com/test1/Reservation", requestOptions)
-        .then(response => response.json()) // Assuming the response is in JSON format
-        .then(result => {
-            // Update the container element with the dynamic table
-            possibleTripList(result);
-        })
-        .catch(error => console.log('error', error));
-}
-}
-
 function possibleTripList(Reservations)
 {   
     if (globalTrip==="0"){
@@ -131,32 +101,6 @@ function possibleTripList(Reservations)
 
 }
 
-
-function readTrips()
-{
-    if(cognitoUser){
-        // Instantiate a Headers object
-    var myHeaders = new Headers();
-    // Add content type header to object
-    myHeaders.append("Content-Type", "application/json");
-
-    // Create a JSON object with parameters for API call and store in a variable
-    var requestOptions = {
-        method: 'GET', // Use GET method for retrieving data
-        headers: myHeaders,
-        redirect: 'follow'
-    };
-
-    // Make API call to get all cars and use promises to handle the response
-    fetch("https://z5mqqjq6dg.execute-api.eu-west-1.amazonaws.com/test1/TripsDB", requestOptions)
-        .then(response => response.json()) // Assuming the response is in JSON format
-        .then(result => {
-            // Update the container element with the dynamic table
-            tripsList(result);
-        })
-        .catch(error => console.log('error', error));
-}
-}
 
 var userCurrentTripID = "testasss";
 var userCurrentDate = "testasss";
@@ -206,13 +150,10 @@ function openEndTripModal(event)
     carId = $(event).closest('tr').find('td:nth-child(2)').text();
     // Pass the carId to the modal for reference
     updateGlobalUserData();
-    console.log(globalUsername);
-
     endTripModal.style.display = 'flex';
-  
 }
 
-function closeEndTripModal(event)
+function closeEndTripModal()
 {
     document.getElementById('endTripModal').style.display = 'none';
   
@@ -248,37 +189,14 @@ function submitTrip()
         globalUsername: globalUsername,
         tripStatus: "Aktyvi"
       };
-    var myHeaders = new Headers();  
-    myHeaders.append("Content-Type", "application/json");
-
-    var requestOptions = {
-        method: 'POST', // Use POST method for sending data
-        headers: myHeaders,
-        body: JSON.stringify(tripData),
-        redirect: 'follow'
-    };
-    fetch("https://z5mqqjq6dg.execute-api.eu-west-1.amazonaws.com/test1/TripsDB", requestOptions)
-            .then(response => response.json())
-            .then(result => {
-                // Handle the result as needed
-                console.log('Result:', result);
-            })
-            .catch(error => console.error('Error:', error));
-    
          
     closeTripModal();
     showPage(); 
     //location.reload();       
 }
-
-
-
-
-
 function endTrip()
 {   
     userTripChange(0);
-    if(cognitoUser){
         // Instantiate a Headers object
         console.log(userCurrentTripID);
     var tripData = {
@@ -286,49 +204,15 @@ function endTrip()
         tripStatus: "Completed",
         endDate: getCurrentTime()
         };
-    var myHeaders = new Headers();
-        // Add content type header to object
-    myHeaders.append("Content-Type", "application/json");
-       
-    var requestOptions = {
-        method: 'PATCH', // Use POST method for sending data
-        headers: myHeaders,
-        body: JSON.stringify(tripData),
-        redirect: 'follow'
-    };
-
-    // Make API call to get all cars and use promises to handle the response
-    fetch("https://z5mqqjq6dg.execute-api.eu-west-1.amazonaws.com/test1/TripsDB", requestOptions)
-        .then(response => response.json()) // Assuming the response is in JSON format
-        .then(result => {
-            // Update the container element with the dynamic table
-            tripsList(result);
-        })
-        .catch(error => console.log('error', error));
+    
     closeEndTripModal();
-    //location.reload();
-}
-    //TripDB change complete
-
-    //ReservationDB change ended
-
-    //CarsDB change status free
-
-   
-    //Ends the trip, changes: 
-      //reservation as complete
-      //trip as ended
-      //car as free
-      //calls rate trip
-      //if problem create issue
-      //c
-}
-
+ 
+ }
+    
 function rateTrip()
 {
      //Ar viskas gerai? Jei ne call createIssue
 }
-
 function createIssue()
 { 
     //if problem after trip, create IssueDB ticket, username, dateRegistered, description, status

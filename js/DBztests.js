@@ -59,6 +59,9 @@ function callAPI(event)  {
 */
 DBCarGetAll().then(cars => updateTable(cars));
 
+console.log(DBCarGetOne("LZJ771"))
+
+
 //var carssss= DBCarGetAll();
 
 
@@ -74,7 +77,7 @@ function updateTable(cars){
     cars.forEach(car => {
         tableHTML += '<tr>';
         tableHTML += '<td>' + car.carsDBModel + '</td>';
-        tableHTML += '<td>' + car.carsDBLicensePlate + '</td>';
+        tableHTML += '<td>' + car.CarId+ '</td>';
         tableHTML += '<td>' + car.carsDBGearbox + '</td>';
         tableHTML += '<td>' + car.carsDBReleaseYear + '</td>';
         //tableHTML += '<td>' + car.carsDBInsuranceDate + '</td>';
@@ -92,4 +95,14 @@ function updateTable(cars){
 };
 
 
+//Delete test:
+/*
+DBCarDelete("LTJ771");
+DBReserDelete("lqtta9ckfvv8shvgz3");
+DBTripDelete("testasss");
+*/
 
+//DBIssuePost("LTJ771", "testas petrauskas", "neveikia rankinis");
+//DBIssueFixed("lrc9ocfznre41ykodsr");
+//DBIssueDelete("lrc9ocfznre41ykodsr");
+//console.log(DBIssueGetOne("lrc9ocfznre41ykodsr"));
