@@ -221,6 +221,11 @@ body {
 
 
 /* ---------- MAIN ---------- */
+#issueDescription {
+  overflow-y: auto;
+  border: 2px solid #000; /* You can adjust the thickness and color according to your preference */
+  padding: 8px; /* Optional: Add some padding for better visual appearance */
+}
 
 .main-container {
   grid-area: main;

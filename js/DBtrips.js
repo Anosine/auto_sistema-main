@@ -1,5 +1,5 @@
 //Post
-function DBTripPost(carId, globalUsername)
+function DBTripPost(carId, globalUsername, reserveID)
 {
     var tripData = {
         TripsDB: generateId(),
@@ -7,6 +7,7 @@ function DBTripPost(carId, globalUsername)
         endDate: "",
         carId: carId,
         globalUsername: globalUsername,
+        reservationID: reserveID,
         tripStatus: "Aktyvi"
       };
 

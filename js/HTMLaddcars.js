@@ -5,13 +5,12 @@ var reqLevel=2;
 updateGlobalUserData()
   .then(level => {
     var roleResult = checkRole(reqLevel);
-    console.log
     // Now you can use roleResult in the if condition or any other part of your code
     if (roleResult) {
-      var addCarForm = document.getElementById('addCarForm');
+      var addCarForm = document.getElementById('pridedFormaMas');
       addCarForm.style.display = 'block';
     } else {
-        var addCarForm = document.getElementById('addCarForm');
+        var addCarForm = document.getElementById('pridedFormaMas');
         addCarForm.style.display = 'none';
     }
 })

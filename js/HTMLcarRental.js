@@ -28,6 +28,7 @@ async function searchReservations() {
       {
         document.getElementById('G').style.display = 'block';
         document.getElementById('tableContainer').style.display = 'block';
+        resultDiv.innerHTML = ``;
         await updateTableRental(result);
         //resultDiv.innerHTML = `<br>            Rasti automobiliai:`;
       }
@@ -51,6 +52,25 @@ async function searchReservations() {
 
 $(function onDocReady() {
 hideStart();
+
+var reqLevel=1;
+console.log(rezSearchBody); 
+updateGlobalUserData()
+  .then(level => {
+    var roleResult = checkRole(reqLevel);
+    if (roleResult) {
+        document.getElementById('rezSearchBody').style.display = 'block';
+    } else {
+        document.getElementById('rezSearchBody').style.display = 'none';
+    }
+})
+.catch(error => {
+    //var addCarForm = document.getElementById('rezSearchBody');
+    document.getElementById('rezSearchBody').style.display = 'none';
+  console.error("Klaida naujinant duomenis:", error);
+});
+
+
 })
 
 
@@ -280,8 +300,8 @@ function yourResListRead () {
     fetch("https://z5mqqjq6dg.execute-api.eu-west-1.amazonaws.com/test1/Reservation", requestOptions)
         .then(response => response.json()) // Assuming the response is in JSON format
         .then(result => {
-            // Update the container element with the dynamic table
-            updateTableYourReservations(result);
+            if (result.length>0){
+            updateTableYourReservations(result);}
         })
         .catch(error => console.log('error', error));
 }

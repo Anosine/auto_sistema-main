@@ -120,17 +120,19 @@ async function DBReserCheck(start, end) {
       //console.log("rezer",currentReservations);
       currentReservations.forEach(reservation => {
         //console.log(reservation);
+        
         var reservationStartDate = reservation.startDate; // Accessing property using dot notation
         var reservationEndDate = reservation.endDate;
         var reservationCarId = reservation.carId;
         var reservationActive = reservation.ReserveStatus // Assuming CarId is at index 2
         //console.log(reservation.startDate);
         // Check if the reservation overlaps with the desired time frame
-
         var overlap =
   (new Date(start) > new Date(reservationEndDate))  || (new Date(end) < new Date(reservationStartDate)); 
         if (!overlap && !reservedCarsArray.includes(reservationCarId)&&reservationActive) {
+            if (!reservation.tripStatus=="Completed"){
             reservedCarsArray.push(reservationCarId);
+            }
          }
       });
       var viableCarsArray = allCarIdArray.filter(carId => !reservedCarsArray.includes(carId));  
@@ -143,7 +145,7 @@ async function DBReserCheck(start, end) {
       console.error('Error in DBReserCheck:', error);
       return [];
     }
-  }
+  
 
 
 
@@ -162,6 +164,8 @@ async function DBReserCheck(start, end) {
   }
   console.log(arrayOfUsableCars);
   return arrayOfUsableCars;
+}
+
 }
 //DBReserCheck("2020-11-26", "2022-01-01");
 
@@ -182,5 +186,3 @@ var currentReservations = DBReserGetAll();
 
 return viableCarsArray
 }*/
-
-

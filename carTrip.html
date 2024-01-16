@@ -98,32 +98,45 @@
       <main class="main-container" >
         <div id="lentelesArkelione"></div>
         <h5 ></h5> 
+
         <div id="possibleTripsTable" class="table" >
-  <!-- Trips table-->
+
        </div>
 
        <div id="currentTripInfo" class="current-trip-info">
-        <!-- Display current trip information here -->
+
+
+
       </div>
           
 
 
-          <h5 >Jūsų kelionės:</h5>
-          <div id="tripHistroyTable" class="table" >
-
-            <!-- Dynamic table from carsDB.js-->
-              
+      <div id="historyTekstas">
+      <h5 >Jūsų buvusios kelionės:</h5>
           
-           
-              
-          </div>  
+    </div>
+        <div id="tripHistroyTable" class="table" > </div>  
           <h5></h5> 
-          <button id="getAllCarsButton" onclick="readTrips(); readReservations()">Atnaujinti</button>
       </main> 
       <!-- End Main -->
 
   
+    <!-- Issue Modal -->
+<div id="IssueModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeIssueModal()">&times;</span>
+      <h2>Įvardinkite problemą:</h2>
+      <form id="issueForm">
+    
+      <label for="issueDescription"></label>
+      <textarea id="issueDescription" name="issueDescription" rows="4" cols="40" required></textarea>
 
+      <br>
+
+      <input type="submit" onclick ="submitIssue()" value="Išsaugoti problemą" >
+    </form>
+    </div>
+</div>
     <!-- Trip Modal -->
 <div id="tripModal" class="modal">
     <div class="modal-content">
@@ -138,7 +151,7 @@
 <!-- End Trip Modal -->
 <div id="endTripModal" class="modal">
   <div class="modal-content">
-    <span class="close" onclick="closeTripModal()">&times;</span>
+    <span class="close" onclick="closeEndTripModal()">&times;</span>
     <h2>Ar tikrai norite baigti kelionę?</h2>
     <form>
 
@@ -153,13 +166,19 @@
     <script src="js/vendor/bootstrap.min.js"></script>
     <script src="js/vendor/aws-cognito-sdk.min.js"></script>
     <script src="js/vendor/amazon-cognito-identity.min.js"></script>
-    <script src="js/config.js"></script>
-    <script src="js/cognito-auth.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aws-sdk/2.1134.0/aws-sdk.min.js"></script>
-    <script src="js/authentication.js"></script>
-    <script src="js/carsDB.js"></script>
-    <script src="js/carRental.js"></script>
+    <script src="js/cognito-auth.js"></script>
+  
     <script src="js/scripts.js"></script>
-    <script src="js/carTrip.js"></script>
+    <script src="js/authentication.js"></script>
+  
+  
+    <script src="js/DBtrips.js"></script>
+    <script src="js/DBcars.js"></script>
+    <script src="js/DBreserve.js"></script>
+    <script src="js/DBissues.js"></script>
+  
+  
+    <script src="js/HTMLcarTrip.js"></script>
   </body>
 </html>

@@ -25,33 +25,34 @@
         <div class="header-left">
           <span class="material-icons-outlined"></span>
         </div>
+        <div id="topBanner">Esate prisijungę</div>
         <div class="header-right">
           <span class="material-icons-outlined">notifications</span>
           <span class="material-icons-outlined" style="padding-right: 65px;">email</span>
 
           <div class="action">
             <div class="profile" onclick="menuToggle();">
-                <img src="images/user.jpg" alt="">
+              <img id="profileImageElement" src="images/user.jpg" alt="">
             </div>
     
             <div class="menu">
-                <ul>
-                    <li>
-                      <span class="material-icons-outlined">person</span>
-                      <a href="#">Redaguoti profilį</a>
-                    </li>
-                    <li>
-                      <span class="material-icons-outlined">settings</span>
-                      <a href="/settings.html">Nustatymai</a>
-                    </li>
-                    <li>
-                      <span class="material-icons-outlined">login</span>
-                      <a href="/login.html">Prisijungti</a>
-                    </li>
-                    <li>
-                      <span class="material-icons-outlined">logout</span>
-                      <a href="#">Atsijungti</a>
-                    </li>
+              <ul>
+                <li>
+                  <span class="material-icons-outlined" id="profileIcon" >person</span>
+                  <a href="/Profile.html" id="profileLink">Redaguoti profilį</a>
+                </li>
+                <li>
+                  <span class="material-icons-outlined">settings</span>
+                  <a href="/settings.html" >Nustatymai</a>
+                </li>
+                <li>
+                  <span class="material-icons-outlined" id="loginIcon">login</span>
+                  <a href="/login.html" id="loginLink"> Prisijungti</a>
+                </li>
+                <li>
+                  <span class="material-icons-outlined" id="logoutIcon" >logout</span>
+                  <a href="#" id="logoutLink" onclick="logout()">Atsijungti</a>
+                </li>
                 </ul>
             </div>
           </div>
@@ -112,22 +113,23 @@
       </style>
       <!-- Main -->
       <main class="main-container">
-        <h1>Techninė informacija</h1>
+        <h1>Aktyvios problemos:</h1>
+        <div id="issuesTable" class="table" > </div>  
 
+        <h1>Išspręstos problemos:</h1>
+        <div id="issuesHistoryTable" class="table" > </div>
         <div class="table">
           <div class="table_section">
               <table>
-                  <thead>
-                      <tr>
-                          <th>Automobilis</th>
-                          <th>Numeriai</th>
-                          <th>Problema</th>
-                          <th>Užregistravimo data</th>
-                          <th>Būsena</th>
-                          <th>Veiksmai</th>
-                      </tr>
-                  </thead>
                   <tbody>
+                    <tr>
+                      <th>Automobilis</th>
+                      <th>Numeriai</th>
+                      <th>Problema</th>
+                      <th>Užregistravimo data</th>
+                      <th>Būsena</th>
+                      <th>Veiksmai</th>
+                  </tr>
                       <tr>
                           <td onclick="goToCarPage('Škoda Octavia')">Škoda Octavia</td>
                           <td>LZJ771</td>
@@ -169,6 +171,29 @@
           </div>
       </div>
     </main>
+
+       <!-- ServiceModal -->
+  <div id="ServiceModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeServiceModal()">&times;</span>
+      <h2>Ar tikrai norite pradėti kelionę?</h2>
+      <form>
+        <input type="button" onclick = carInService(carId) value="PRADĖTI">
+    </form>
+    </div>
+  </div>
+  <!-- End Trip Modal -->
+  <div id="FixedModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeFixedModal(carId)">&times;</span>
+    <h2>Ar tikrai norite baigti kelionę?</h2>
+    <form>
+
+      <input type="button" onclick = carFixed() value="BAIGTI">
+  </form>
+  </div>
+  </div>
+
     <!-- End Main -->
     <script>
       function performAction(action) {
@@ -182,6 +207,23 @@
 
   <!-- Scripts -->
   <!-- Custom JS -->
-  <script src="js/scripts.js"></script>
+    <script src="js/vendor/jquery-3.1.0.js"></script>
+    <script src="js/vendor/bootstrap.min.js"></script>
+    <script src="js/vendor/aws-cognito-sdk.min.js"></script>
+    <script src="js/vendor/amazon-cognito-identity.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aws-sdk/2.1134.0/aws-sdk.min.js"></script>
+    <script src="js/cognito-auth.js"></script>
+  
+    <script src="js/scripts.js"></script>
+    <script src="js/authentication.js"></script>
+  
+  
+    <script src="js/DBtrips.js"></script>
+    <script src="js/DBcars.js"></script>
+    <script src="js/DBreserve.js"></script>
+    <script src="js/DBissues.js"></script>
+  
+  
+    <script src="js/HTMLtechInfo.js"></script>
 </body>
 </html>
