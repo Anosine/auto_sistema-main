@@ -40,6 +40,7 @@ async function showPage()
     await initializeApp();
     issueList(await DBIssueGetAll());
     issueHistoryList(await DBIssueGetAll());
+    technikineList(await DBCarGetAll());
 
     //if no active trip show reserve list and last trips
 }
@@ -169,10 +170,12 @@ var TripReservationID = "tests";
 
 
 
+
+
 async function technikineList(cars)
     {
     //console.log("tripsList start", trips);
-    var tableContainer = $('#issuesHistoryTable'); 
+    var tableContainer = $('#technikinesTable'); 
     var tableHTML = '<table border="1">';
     tableHTML += '<tr><th>Automobilis</th><th>Numeriai</th><th colspan="2">Technikinės apžiūros pabaiga</th><th>Atnaujinti techikinę</th></tr>';
     //var allCars = await DBCarGetAll();
@@ -180,18 +183,22 @@ async function technikineList(cars)
     //{
 
     ///}
-
+        
     cars.forEach(async car => {
         //var carModel = await DBCarGetOne(carId).carsDBModel;
         //console.log("mes");
         //+getCurrentTime
 
-        //new Date(start) > new Date(reservationEndDate))
+        const currentTime = new Date(getCurrentTime());
+        const techDate = new Date(car.carsDBTechDate);
 
-        if (car.carsDBTechDate=="Išspręsta"){      
+        const monthDifference = ( (techDate.getFullYear()* 12 +
+      + techDate.getMonth())- (currentTime.getFullYear()* 12+ currentTime.getMonth() ));
+        console.log(monthDifference);
+        //return monthDifference <= 2;
+        if(monthDifference <= 2){      
         //console.log("me2s"); 
         tableHTML += '<tr>';
-        console.log("carID", carModel);
         //await delay(1000);
         //tableHTML += '<td>' + issue.IssueID + '</td>';
         tableHTML += '<td>' + car.carModel + '</td>';

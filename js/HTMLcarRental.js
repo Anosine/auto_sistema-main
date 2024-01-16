@@ -319,18 +319,19 @@ async function updateTableYourReservations(Reservations) {
     //console.log(globalUsername);
    
     //Tik atviras rezervacijas rodyti
-    
+    var happened = 0;
     // Iterate through the cars array and add rows to the table
     Reservations.forEach(reservation => {
         
         if (reservation.globalUsername === globalUsername){
             //console.log(reservation);
             if (reservation.ReserveStatus === "Aktyvi" ){
+                happened = 1;
                 console.log("bandommmm");
                 document.getElementById('JusuRez').style.display = 'block';
                 document.getElementById('yourReservationTable').style.display = 'block';   
                 document.getElementById('NeturitRez').style.display = 'none';  
-            tableHTML += '<tr>';
+        tableHTML += '<tr>';
         tableHTML += '<td>' + reservation.ReserveID + '</td>';
         tableHTML += '<td>' + reservation.carId + '</td>';
         tableHTML += '<td>' + reservation.carsDBModel + '</td>';
@@ -341,14 +342,22 @@ async function updateTableYourReservations(Reservations) {
         tableHTML += '</tr>';
         }
     }
-    else{
-    document.getElementById('JusuRez').style.display = 'none';
-    document.getElementById('yourReservationTable').style.display = 'none';   
-    document.getElementById('NeturitRez').style.display = 'block';
-    }
+    
     }
     );
-
+    if(!happened)
+        {    //console.log("mums kazkas2");
+            document.getElementById('JusuRez').style.display = 'none';
+                document.getElementById('yourReservationTable').style.display = 'none';   
+                document.getElementById('NeturitRez').style.display = 'block';    
+        }
+        else{
+            //console.log("mums kazkas");
+            document.getElementById('JusuRez').style.display = 'block';
+                document.getElementById('yourReservationTable').style.display = 'block';   
+                document.getElementById('NeturitRez').style.display = 'none';  
+        
+        }
     tableHTML += '</table>';
 
     // Update the content of the container element
