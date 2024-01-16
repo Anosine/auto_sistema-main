@@ -136,12 +136,16 @@
   </div>
 
   <!-- TechModal -->
-  <div id="'TechModal" class="modal">
+  <div id="TechModal" class="modal">
     <div class="modal-content">
       <span class="close" onclick="closeTechModal()">&times;</span>
-      <h2>Ar norite automobilį pažymėti kaip remontuojamą?</h2>
+      <h4>Įveskite naują technikinės galiojimo datą</h4>
       <form>
-        <input type="button" onclick = submitTech(carId,newTechDate) value="TAIP">
+        <div class="input-box">
+          <label for="TechDatePicker"></label>
+          <input type="date" class="form-control" id="TechDatePicker">
+        </div>
+        <input type="button" onclick = submitTech(carId) value="TAIP">
     </form>
     </div>
   </div>

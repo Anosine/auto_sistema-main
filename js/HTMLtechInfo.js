@@ -244,8 +244,12 @@ firstColumnCells.forEach(cell => {cell.style.display = 'none';});
 
 
 
-async function openTechModal(){
+function openTechModal(event){
     document.getElementById('TechModal').style.display = 'flex';
+    carId = $(event).closest('tr').find('td:nth-child(2)').text();
+    //console.log(carId);
+    //submitTech(carId);
+    //TechModal.style.display = 'flex';
 }
 
 async function closeTechModal(){
@@ -253,16 +257,16 @@ async function closeTechModal(){
 
 }
 
-async function submitTech(carId, newTechDate){
-    //preventdef
-    //event.preventDefault();
-    //console.log(userCurrentCarId);
-    //console.log(globalUsername);
-    //var issueDescription = document.getElementById('issueDescription').value;
-    //console.log(issueDescription);
-    //await DBIssuePost(userCurrentCarId, globalUsername, issueDescription) 
-
-    closeIssueModal();
+async function submitTech(CarId){
+    var newTechDate = document.getElementById("TechDatePicker").value;
+    //console.log(newTechDate);
+    var techData = {
+        CarId: CarId,
+        carsDBTechDate: newTechDate
+    };
+    await DBCarUpdate(techData);
+    await technikineList(await DBCarGetAll());
+    closeTechModal();
 }
 
 async function issueHistoryList(issues)
