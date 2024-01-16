@@ -1,6 +1,7 @@
 $(function onDocReady() {
     var reqLevel=2;
     //console.log(rezSearchBody); 
+    var issueTekstas = document.getElementById('issueTekstas');  
     updateGlobalUserData()
       .then(level => {
         var roleResult = checkRole(reqLevel);
@@ -8,6 +9,7 @@ $(function onDocReady() {
             showPage();
             //showPage();//document.getElementById('rezSearchBody').style.display = 'block';
         } else {
+            issueTekstas.innerText = 'Prieinama tik technikams';
             //document.getElementById('rezSearchBody').style.display = 'none';
             //document.getElementById('historyTekstas').style.display = 'none';
         }
@@ -16,6 +18,7 @@ $(function onDocReady() {
         //var addCarForm = document.getElementById('rezSearchBody');
         //document.getElementById('rezSearchBody').style.display = 'none';
        /// document.getElementById('historyTekstas').style.display = 'none'
+      issueTekstas.innerText = 'Prieinama tik technikams';
       console.error("Klaida naujinant duomenis:", error);
     });
     
@@ -36,6 +39,7 @@ async function showPage()
 {   
     await initializeApp();
     issueList(await DBIssueGetAll());
+    issueHistoryList(await DBIssueGetAll());
 
     //if no active trip show reserve list and last trips
 }
@@ -163,12 +167,69 @@ var userCurrentDate = "testasss";
 var userCurrentCarId = "testasss";
 var TripReservationID = "tests";
 
-async function issueList(issues)
+
+
+async function technikineList(cars)
     {
     //console.log("tripsList start", trips);
-    var tableContainer = $('#issuesTable'); 
+    var tableContainer = $('#issuesHistoryTable'); 
     var tableHTML = '<table border="1">';
-    tableHTML += '<tr><th>Automobilis</th><th>Numeriai</th><th colspan="2">Problema</th><th>Data</th><th>Automobilio būsena</th><th>Veiksmai</th></tr>';
+    tableHTML += '<tr><th>Automobilis</th><th>Numeriai</th><th colspan="2">Technikinės apžiūros pabaiga</th><th>Atnaujinti techikinę</th></tr>';
+    //var allCars = await DBCarGetAll();
+    //while (i<allCars.length)
+    //{
+
+    ///}
+
+    cars.forEach(async car => {
+        //var carModel = await DBCarGetOne(carId).carsDBModel;
+        //console.log("mes");
+        //+getCurrentTime
+
+        //new Date(start) > new Date(reservationEndDate))
+
+        if (car.carsDBTechDate=="Išspręsta"){      
+        //console.log("me2s"); 
+        tableHTML += '<tr>';
+        console.log("carID", carModel);
+        //await delay(1000);
+        //tableHTML += '<td>' + issue.IssueID + '</td>';
+        tableHTML += '<td>' + car.carModel + '</td>';
+        tableHTML += '<td>' + car.carId + '</td>';
+        tableHTML += '<td colspan="2">' + car.carsDBTechDate + '</td>';
+        //tableHTML += '<td>' +  '</td>';
+        //tableHTML += '<td class="action-buttons">' +'<button onclick="openServiceModal(this)"><span class="material-icons-outlined">construction</span></button> '+'                          <button onclick="openFixedModal(this)"><span class="material-icons-outlined">done</span></button>'+ '</td>';
+        //tableHTML += '<td>' + '<button id="startTripButton" /onclick="openTripModal(this)">Pradėti kelionę</button></td>';
+        //tableHTML += '<td>' + '<button id="cancelReservationButton" /onclick="cancelReservation(this)">Atšaukti</button></td>';
+        tableHTML += '</tr>';
+        //}
+    }}
+    );
+    
+    
+    //const timeLength = getTimeLength(startDateStr, endDateStr);
+    //console.log(timeLength);
+    
+    
+    await delay(600);
+    tableHTML += '</table>';
+
+    // Update the content of the container element
+    tableContainer.html(tableHTML);
+    const firstColumnCells = document.querySelectorAll('#issuesTable td:first-child')
+firstColumnCells.forEach(cell => {cell.style.display = 'none';});
+    //Reservation active list,(carID; Start Date; End date;  start trip button; cancel reservation buttton)
+}
+
+
+
+
+async function issueHistoryList(issues)
+    {
+    //console.log("tripsList start", trips);
+    var tableContainer = $('#issuesHistoryTable'); 
+    var tableHTML = '<table border="1">';
+    tableHTML += '<tr><th>Automobilis</th><th>Numeriai</th><th colspan="2">Problema</th><th>Kaštai, €</th><th>Išsprendimo data</th><th>Trukmė sprendimo</th></tr>';
     //var allCars = await DBCarGetAll();
     //while (i<allCars.length)
     //{
@@ -177,9 +238,66 @@ async function issueList(issues)
 
     issues.forEach(async issue => {
         //var carModel = await DBCarGetOne(carId).carsDBModel;
+        //console.log("mes");
+        if (issue.issueStatus=="Išspręsta"){      
+            console.log("me2s"); 
+        tableHTML += '<tr>';
+        const carData = await DBCarGetOne(issue.carId);
+        const carUse = carData.carsDBUsability;
+        
+        const carModel = carData.carsDBModel;
+        console.log("carID", carModel);
+        //await delay(1000);
+        //tableHTML += '<td>' + issue.IssueID + '</td>';
+        tableHTML += '<td>' + carModel + '</td>';
+        tableHTML += '<td>' + issue.carId + '</td>';
+        tableHTML += '<td colspan="2">' + issue.issueDesc + '</td>';
+        //tableHTML += '<td>' +  '</td>';
+        tableHTML += '<td>' + issue.fixingCosts + '</td>';
+        tableHTML += '<td>' + issue.fixedDate + '</td>';
+        tableHTML += '<td >' + getTimeLength(issue.createdDate, issue.fixedDate) + '</td>';
+        //tableHTML += '<td class="action-buttons">' +'<button onclick="openServiceModal(this)"><span class="material-icons-outlined">construction</span></button> '+'                          <button onclick="openFixedModal(this)"><span class="material-icons-outlined">done</span></button>'+ '</td>';
+        //tableHTML += '<td>' + '<button id="startTripButton" /onclick="openTripModal(this)">Pradėti kelionę</button></td>';
+        //tableHTML += '<td>' + '<button id="cancelReservationButton" /onclick="cancelReservation(this)">Atšaukti</button></td>';
+        tableHTML += '</tr>';
+        //}
+    }}
+    );
+    
+    
+    //const timeLength = getTimeLength(startDateStr, endDateStr);
+    //console.log(timeLength);
+    
+    
+    await delay(600);
+    tableHTML += '</table>';
+
+    // Update the content of the container element
+    tableContainer.html(tableHTML);
+    const firstColumnCells = document.querySelectorAll('#issuesTable td:first-child')
+firstColumnCells.forEach(cell => {cell.style.display = 'none';});
+    //Reservation active list,(carID; Start Date; End date;  start trip button; cancel reservation buttton)
+}
+
+
+async function issueList(issues)
+    {
+    //console.log("tripsList start", trips);
+    var tableContainer = $('#issuesTable'); 
+    var tableHTML = '<table border="1">';
+    tableHTML += '<tr><th>Automobilis</th><th>Numeriai</th><th colspan="2">Problema</th><th>Registracijos data</th><th>Automobilio būsena</th><th>Veiksmai</th></tr>';
+    //var allCars = await DBCarGetAll();
+    //while (i<allCars.length)
+    //{
+    var issueKeistis = document.getElementById('issueKeistis');  
+    
+    ///}
+    var happened = 0;
+    issues.forEach(async issue => {
+        //var carModel = await DBCarGetOne(carId).carsDBModel;
         console.log("mes");
         if (issue.issueStatus=="Aktyvi"){      
-            console.log("me2s"); 
+        happened=1;
         tableHTML += '<tr>';
         const carData = await DBCarGetOne(issue.carId);
         const carUse = carData.carsDBUsability;
@@ -198,10 +316,23 @@ async function issueList(issues)
         //tableHTML += '<td>' + '<button id="startTripButton" /onclick="openTripModal(this)">Pradėti kelionę</button></td>';
         //tableHTML += '<td>' + '<button id="cancelReservationButton" /onclick="cancelReservation(this)">Atšaukti</button></td>';
         tableHTML += '</tr>';
+            
         //}
     }}
     );
-
+    if(!happened)
+        {    console.log("mums kazkas2");
+            document.getElementById('issuesTable').style.display = 'none';
+            document.getElementById('issuesTable').style.display = 'none';
+            issueKeistis.innerText = 'Nėra aktyvių problemų :)';   
+        }
+        else{
+            console.log("mums kazkas");
+            document.getElementById('issuesTable').style.display = 'block';
+            document.getElementById('issuesTable').style.display = 'block';
+            issueKeistis.innerText = 'Aktyvios problemos:';
+        
+        }
     
     await delay(600);
     tableHTML += '</table>';
@@ -215,6 +346,7 @@ firstColumnCells.forEach(cell => {cell.style.display = 'none';});
 
 
 var carId;
+var IssueID;
 
 async function openServiceModal(event)
 {   
@@ -233,20 +365,26 @@ async function closeServiceModal()
 }
 
 
-
-
-
 async function openFixedModal(event)
 {   
     carId = $(event).closest('tr').find('td:nth-child(3)').text();
-    //console.log(carId);
-
-
+    IssueID = $(event).closest('tr').find('td:nth-child(1)').text();
+    //console.log(IssueID);
     FixedModal.style.display = 'flex';
 }
 async function carFixed()
 {
+    event.preventDefault();
+    var costs = document.getElementById('costs').value;    
+    var naujinam = {
+        IssueID: IssueID,
+        fixedDate: getCurrentTime(),
+        fixingCosts: costs,
+        issueStatus: "Išspręsta",
+      };
+    DBIssueUpdate(naujinam);
     DBmarkCarAsFree(carId);
+    closeFixedModal();
 }
 async function closeFixedModal()
 {

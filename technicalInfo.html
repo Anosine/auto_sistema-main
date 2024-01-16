@@ -113,72 +113,24 @@
       </style>
       <!-- Main -->
       <main class="main-container">
-        <h1>Aktyvios problemos:</h1>
+        <h1 id="issueKeistis"></h1>
         <div id="issuesTable" class="table" > </div>  
 
-        <h1>Išspręstos problemos:</h1>
+        <h1 id="techTekstas"></h1>
+        <div id="technikinesTable" class="table" > </div>  
+
+        <h1 id="issueTekstas">Išspręstos problemos:</h1>
         <div id="issuesHistoryTable" class="table" > </div>
-        <div class="table">
-          <div class="table_section">
-              <table>
-                  <tbody>
-                    <tr>
-                      <th>Automobilis</th>
-                      <th>Numeriai</th>
-                      <th>Problema</th>
-                      <th>Užregistravimo data</th>
-                      <th>Būsena</th>
-                      <th>Veiksmai</th>
-                  </tr>
-                      <tr>
-                          <td onclick="goToCarPage('Škoda Octavia')">Škoda Octavia</td>
-                          <td>LZJ771</td>
-                          <td>Neužsiveda</td>
-                          <td>2023-12-10</td>
-                          <td>Remontuojama</td>
-                          <td class="action-buttons">
-                            <button onclick="performAction('repair')"><span class="material-icons-outlined">construction</span></button>
-                            <button onclick="performAction('waiting')"><span class="material-icons-outlined">hourglass_empty</span></button>
-                            <button onclick="performAction('repaired')"><span class="material-icons-outlined">done</span></button>
-                          </td>
-                      </tr>
-                      <tr>
-                          <td onclick="goToCarPage('Opel Vectra')">Opel Vectra</td>
-                          <td>LTJ777</td>
-                          <td>Nedega priekinis žibintas</td>
-                          <td>2023-12-15</td>
-                          <td>Laukia remonto</td>
-                          <td class="action-buttons">
-                            <button onclick="performAction('repair')"><span class="material-icons-outlined">construction</span></button>
-                            <button onclick="performAction('waiting')"><span class="material-icons-outlined">hourglass_empty</span></button>
-                            <button onclick="performAction('repaired')"><span class="material-icons-outlined">done</span></button>
-                          </td>
-                      </tr>
-                      <tr>
-                        <td onclick="goToCarPage('car3')">Opel Vectra</td>
-                        <td>LTJ785</td>
-                        <td>Tepalų keitimas</td>
-                        <td>2023-11-20</td>
-                        <td>Suremontuota</td>
-                        <td class="action-buttons">
-                          <button onclick="performAction('repair')"><span class="material-icons-outlined">construction</span></button>
-                          <button onclick="performAction('waiting')"><span class="material-icons-outlined">hourglass_empty</span></button>
-                          <button onclick="performAction('repaired')"><span class="material-icons-outlined">done</span></button>
-                        </td>
-                    </tr>
-                  </tbody>
-              </table>
-          </div>
-      </div>
+    
     </main>
 
        <!-- ServiceModal -->
   <div id="ServiceModal" class="modal">
     <div class="modal-content">
       <span class="close" onclick="closeServiceModal()">&times;</span>
-      <h2>Ar tikrai norite pradėti kelionę?</h2>
+      <h2>Ar norite automobilį pažymėti kaip remontuojamą?</h2>
       <form>
-        <input type="button" onclick = carInService(carId) value="PRADĖTI">
+        <input type="button" onclick = carInService(carId) value="TAIP">
     </form>
     </div>
   </div>
@@ -186,11 +138,16 @@
   <div id="FixedModal" class="modal">
   <div class="modal-content">
     <span class="close" onclick="closeFixedModal(carId)">&times;</span>
-    <h2>Ar tikrai norite baigti kelionę?</h2>
-    <form>
+    <h2>Įveskite remonto kašus, €:</h2>
+    <form id="issueForm">
+    
+      <label for="costs"></label>
+      <textarea id="costs" name="costs" rows="1" cols="10" required></textarea>
 
-      <input type="button" onclick = carFixed() value="BAIGTI">
-  </form>
+      <br>
+
+      <input type="submit" onclick ="carFixed()" value="PROBLEMA IŠSPRĘSTA" >
+    </form>
   </div>
   </div>
 

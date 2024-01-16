@@ -69,7 +69,7 @@ function DBCarGetOne(CarId)
     .then(response => response.json()) // Assuming the response is in JSON format
     .then(result => {
         // Process the result (array of cars)
-        console.log('Gauta mašina DBCarGetOne:', result);
+        //console.log('Gauta mašina DBCarGetOne:', result);
         // Update the container element with the dynamic table
         return result;
     })
@@ -103,7 +103,7 @@ function DBmarkCarAsFree(carId) {
 function DBmarkCarAsInService(carId) {
     var reservationData = {
         CarId: carId,
-        carsDBUsability: "Remontuojama"
+        carsDBUsability: "Remontuojamas"
       };
    
       var requestOptions = {

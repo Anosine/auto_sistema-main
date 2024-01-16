@@ -47,6 +47,19 @@ function getCurrentTime() {
   return formattedTime;
 }
 
+function getTimeLength(startDateStr, endDateStr) {
+  const startDate = new Date(startDateStr);
+  const endDate = new Date(endDateStr);
+
+  const diff = Math.abs(endDate - startDate);
+  const days = Math.floor(diff / (24 * 60 * 60 * 1000));
+
+  if (days === 0) {
+      return '<1 d.';
+  }
+
+  return days + ' d.';
+}
 //
 function generateId(){
   return Date.now().toString(36) + Math.random().toString(36).substr(2);
