@@ -116,7 +116,7 @@
         <h1 id="issueKeistis"></h1>
         <div id="issuesTable" class="table" > </div>  
 
-        <h1 id="techTekstas"></h1>
+        <h1 id="techTekstas"> Technikinės informacija:</h1>
         <div id="technikinesTable" class="table" > </div>  
 
         <h1 id="issueTekstas">Išspręstos problemos:</h1>
@@ -131,6 +131,17 @@
       <h2>Ar norite automobilį pažymėti kaip remontuojamą?</h2>
       <form>
         <input type="button" onclick = carInService(carId) value="TAIP">
+    </form>
+    </div>
+  </div>
+
+  <!-- TechModal -->
+  <div id="'TechModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeTechModal()">&times;</span>
+      <h2>Ar norite automobilį pažymėti kaip remontuojamą?</h2>
+      <form>
+        <input type="button" onclick = submitTech(carId,newTechDate) value="TAIP">
     </form>
     </div>
   </div>

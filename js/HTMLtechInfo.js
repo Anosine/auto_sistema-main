@@ -111,6 +111,7 @@ async function cancelReservationInTrips(event){
     await possibleTripList(await DBReserGetAll());
 }
 
+
 function possibleTripList(Reservations)
 {   
     if (globalTrip==="0"){
@@ -183,7 +184,7 @@ async function technikineList(cars)
     //{
 
     ///}
-        
+    var techHapp =0;    
     cars.forEach(async car => {
         //var carModel = await DBCarGetOne(carId).carsDBModel;
         //console.log("mes");
@@ -196,14 +197,16 @@ async function technikineList(cars)
       + techDate.getMonth())- (currentTime.getFullYear()* 12+ currentTime.getMonth() ));
         console.log(monthDifference);
         //return monthDifference <= 2;
-        if(monthDifference <= 2){      
+        if(monthDifference <= 3){
+        techHapp =1;      
         //console.log("me2s"); 
         tableHTML += '<tr>';
         //await delay(1000);
         //tableHTML += '<td>' + issue.IssueID + '</td>';
-        tableHTML += '<td>' + car.carModel + '</td>';
-        tableHTML += '<td>' + car.carId + '</td>';
+        tableHTML += '<td>' + car.carsDBModel + '</td>';
+        tableHTML += '<td>' + car.CarId + '</td>';
         tableHTML += '<td colspan="2">' + car.carsDBTechDate + '</td>';
+        tableHTML += '<td>' + '<button id="naujintTech" /onclick="openTechModal(this)">Naujinti</button></td>';
         //tableHTML += '<td>' +  '</td>';
         //tableHTML += '<td class="action-buttons">' +'<button onclick="openServiceModal(this)"><span class="material-icons-outlined">construction</span></button> '+'                          <button onclick="openFixedModal(this)"><span class="material-icons-outlined">done</span></button>'+ '</td>';
         //tableHTML += '<td>' + '<button id="startTripButton" /onclick="openTripModal(this)">Pradėti kelionę</button></td>';
@@ -212,7 +215,18 @@ async function technikineList(cars)
         //}
     }}
     );
-    
+    if(!techHapp)
+        {    //console.log("mums kazkas2");
+            document.getElementById('techTekstas').style.display = 'none';
+            document.getElementById('technikinesTable').style.display = 'none';   
+  
+        }
+        else{
+            //console.log("mums kazkas");
+            document.getElementById('techTekstas').style.display = 'block';
+                document.getElementById('technikinesTable').style.display = 'block';   
+        
+    }
     
     //const timeLength = getTimeLength(startDateStr, endDateStr);
     //console.log(timeLength);
@@ -230,6 +244,26 @@ firstColumnCells.forEach(cell => {cell.style.display = 'none';});
 
 
 
+async function openTechModal(){
+    document.getElementById('TechModal').style.display = 'flex';
+}
+
+async function closeTechModal(){
+    document.getElementById('TechModal').style.display = 'none';
+
+}
+
+async function submitTech(carId, newTechDate){
+    //preventdef
+    //event.preventDefault();
+    //console.log(userCurrentCarId);
+    //console.log(globalUsername);
+    //var issueDescription = document.getElementById('issueDescription').value;
+    //console.log(issueDescription);
+    //await DBIssuePost(userCurrentCarId, globalUsername, issueDescription) 
+
+    closeIssueModal();
+}
 
 async function issueHistoryList(issues)
     {
