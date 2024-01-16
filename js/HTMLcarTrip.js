@@ -1,5 +1,5 @@
 $(function onDocReady() {
-    var reqLevel=1;
+    var reqLevel=0;
     //console.log(rezSearchBody); 
     updateGlobalUserData()
       .then(level => {

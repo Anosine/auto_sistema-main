@@ -27,33 +27,34 @@
           <div class="header-left">
             <span class="material-icons-outlined"></span>
           </div>
+          <div id="topBanner">Esate prisijungę</div>
           <div class="header-right">
             <span class="material-icons-outlined">notifications</span>
             <span class="material-icons-outlined" style="padding-right: 65px;">email</span>
   
             <div class="action">
               <div class="profile" onclick="menuToggle();">
-                  <img id="profileImageElement" src="images/user.jpg" alt="">
+                <img id="profileImageElement" src="images/user.jpg" alt="">
               </div>
       
               <div class="menu">
-                  <ul>
-                      <li>
-                        <span class="material-icons-outlined" id="profileIcon" >person</span>
-                        <a href="/Profile.html" id="profileLink">Redaguoti profilį</a>
-                      </li>
-                      <li>
-                        <span class="material-icons-outlined">settings</span>
-                        <a href="/settings.html" >Nustatymai</a>
-                      </li>
-                      <li>
-                        <span class="material-icons-outlined" id="loginIcon">login</span>
-                        <a href="/login.html" id="loginLink"> Prisijungti</a>
-                      </li>
-                      <li>
-                        <span class="material-icons-outlined" id="logoutIcon" >logout</span>
-                        <a href="#" id="logoutLink">Atsijungti</a>
-                      </li>
+                <ul>
+                  <li>
+                    <span class="material-icons-outlined" id="profileIcon" >person</span>
+                    <a href="/Profile.html" id="profileLink">Redaguoti profilį</a>
+                  </li>
+                  <li>
+                    <span class="material-icons-outlined">settings</span>
+                    <a href="/settings.html" >Nustatymai</a>
+                  </li>
+                  <li>
+                    <span class="material-icons-outlined" id="loginIcon">login</span>
+                    <a href="/login.html" id="loginLink"> Prisijungti</a>
+                  </li>
+                  <li>
+                    <span class="material-icons-outlined" id="logoutIcon" >logout</span>
+                    <a href="#" id="logoutLink" onclick="logout()">Atsijungti</a>
+                  </li>
                   </ul>
               </div>
             </div>
@@ -62,37 +63,47 @@
         <!-- End Header -->
   
         <!-- Sidebar -->
-        <aside id="sidebar">
-          <div class="sidebar-title">
-            <div class="sidebar-brand">
-              <span class="material-icons-outlined">directions_car</span> Automobilių valdymo sistema
-            </div>
-            <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
+      <aside id="sidebar">
+        <div class="sidebar-title">
+          <div class="sidebar-brand">
+            <span class="material-icons-outlined">directions_car</span> Automobilių valdymo sistema
           </div>
-  
-          <ul class="sidebar-list">
-            <li class="sidebar-list-item">
-              <a href="/index.htmls" target="_self">
-                <span class="material-icons-outlined">dashboard</span> Dashboard
-              </a>
-            </li>
-            <li class="sidebar-list-item">
-              <a href="/carRental.html" target="_self">
-                <span class="material-icons-outlined">car_rental</span> Realaus laiko stebėsena
-              </a>
-            </li>
-            <li class="sidebar-list-item">
-              <a href="/cars.html" target="_self">
-                <span class="material-icons-outlined">directions_car</span> Automobiliai
-              </a>
-            </li>
-            <li class="sidebar-list-item">
-              <a href="#" target="_blank">
-                <span class="material-icons-outlined">poll</span> Apžvalga
-              </a>
-            </li>
-          </ul>
-        </aside>
+          <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
+        </div>
+
+        <ul class="sidebar-list">
+          <li class="sidebar-list-item">
+            <a href="/index.html" target="_self">
+              <span class="material-icons-outlined">dashboard</span> Apžvalga
+            </a>
+          </li>
+          <li class="sidebar-list-item">
+            <a href="/carRental.html" target="_self">
+              <span class="material-icons-outlined">car_rental</span> Rezervacija
+            </a>
+          </li>
+          <li class="sidebar-list-item">
+            <a href="/carTrip.html" target="_self">
+              <span class="material-icons-outlined">directions_car</span> Kelionė
+            </a>
+          </li>
+          <li class="sidebar-list-item">
+            <a href="/addcars.html" target="_self">
+              <span class="material-icons-outlined">directions_car</span> Pridėti automobilį
+            </a>
+          </li>
+          <li class="sidebar-list-item">
+            <a href="/technicalInfo.html" target="_self">
+              <span class="material-icons-outlined">car_repair</span> Techninė informacija
+            </a>
+          </li>
+          <!--<li class="sidebar-list-item">
+            <a href="#" target="_blank">
+              <span class="material-icons-outlined">poll</span> Apžvalga
+            </a>
+          </li>-->
+        </ul>
+      </aside>
         <!-- End Sidebar -->
     <h1>Jūsų profilis</h1>
 
@@ -133,13 +144,23 @@
 
 
  <!-- Include the AWS SDK -->
-  <script src="js/vendor/jquery-3.1.0.js"></script>
-  <script src="js/vendor/bootstrap.min.js"></script>
-  <script src="js/vendor/aws-cognito-sdk.min.js"></script>
-  <script src="js/vendor/amazon-cognito-identity.min.js"></script>
-  <script src="js/config.js"></script>
-  <script src="js/cognito-auth.js"></script>
-  <script src="js/scripts.js"></script>
-  <script src="js/authentication.js"></script>
+ <script src="js/vendor/jquery-3.1.0.js"></script>
+ <script src="js/vendor/bootstrap.min.js"></script>
+ <script src="js/vendor/aws-cognito-sdk.min.js"></script>
+ <script src="js/vendor/amazon-cognito-identity.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/aws-sdk/2.1134.0/aws-sdk.min.js"></script>
+ <script src="js/cognito-auth.js"></script>
+
+ <script src="js/scripts.js"></script>
+ <script src="js/authentication.js"></script>
+
+
+ <script src="js/DBtrips.js"></script>
+ <script src="js/DBcars.js"></script>
+ <script src="js/DBreserve.js"></script>
+ <script src="js/DBissues.js"></script>
+
+
+ <script src="js/HTMLaddcars.js"></script>
   <script src="js/HTMLprofile.js"></script>
 </html>

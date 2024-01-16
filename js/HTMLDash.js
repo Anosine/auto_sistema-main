@@ -1,8 +1,8 @@
 $(function onDocReady() {
-    var reqLevel=1;
+    var reqLevel=0;
     //console.log(rezSearchBody); 
-    var issueTekstas = document.getElementById('issueTekstas');  
-    var techTekstas = document.getElementById('techTekstas');
+    var maintekstas = document.getElementById('maintekstas');  
+    //var techTekstas = document.getElementById('techTekstas');
     updateGlobalUserData()
       .then(level => {
         var roleResult = checkRole(reqLevel);
@@ -10,8 +10,8 @@ $(function onDocReady() {
             showPage();
             //showPage();//document.getElementById('rezSearchBody').style.display = 'block';
         } else {
-            issueTekstas.innerText = 'Prieinama tik technikams';
-            techTekstas.innerText = '';
+            maintekstas.innerText = 'Prieinama tik darbuotojams';
+            //techTekstas.innerText = '';
             //document.getElementById('rezSearchBody').style.display = 'none';
             //document.getElementById('historyTekstas').style.display = 'none';
         }
@@ -20,9 +20,9 @@ $(function onDocReady() {
         //var addCarForm = document.getElementById('rezSearchBody');
         //document.getElementById('rezSearchBody').style.display = 'none';
        /// document.getElementById('historyTekstas').style.display = 'none'
-      issueTekstas.innerText = 'Prieinama tik technikams';
-      techTekstas.innerText = '';
-      console.error("Klaida naujinant duomenis:", error);
+       maintekstas.innerText = 'Prieinama tik darbuotojams';
+      //techTekstas.innerText = '';
+      //console.error("Klaida naujinant duomenis:", error);
     });
     
     })
@@ -30,7 +30,7 @@ $(function onDocReady() {
 
 
 
-var tekstasKeistis = document.getElementById('lentelesArkelione');  
+//var tekstasKeistis = document.getElementById('lentelesArkelione');  
 
 
 
@@ -40,10 +40,10 @@ var tekstasKeistis = document.getElementById('lentelesArkelione');
 
 async function showPage()
 {   
-    await initializeApp();
-    issueList(await DBIssueGetAll());
-    issueHistoryList(await DBIssueGetAll());
-    technikineList(await DBCarGetAll());
+    //await initializeApp();
+    await carList(await DBCarGetAll());
+    //issueHistoryList(await DBIssueGetAll());
+    //technikineList(await DBCarGetAll());
 
     //if no active trip show reserve list and last trips
 }
@@ -51,6 +51,49 @@ async function showPage()
 function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
+
+
+async function carList(cars){
+        var tableContainer = $('#carsList');
+        var tableHTML = '<table border="1">';
+        tableHTML += '<tr><th>Automobilis</th><th>Numeriai</th><th>Užimtumas</th><th>Var. ratai</th><th>Tech. galiojimo data</th><th>Pagaminimo metai</th><th>Kuro tipas</th></tr>';
+        console.log("mes bandom");
+        cars.forEach(car => {
+            console.log("meslabiaub");
+            tableHTML += '<tr>';
+            tableHTML += '<td>' + car.carsDBModel + '</td>';
+            tableHTML += '<td>' + car.CarId + '</td>';
+            
+            tableHTML += '<td>' + car.carsDBdrivebase + '</td>';
+            tableHTML += '<td>' + car.carsDBUsability + '</td>';
+            tableHTML += '<td>' + car.carsDBTechDate + '</td>';
+            tableHTML += '<td>' + car.carsDBReleaseYear + '</td>';
+            
+
+            tableHTML += '<td>' + car.carsDBFuel + '</td>';
+           // tableHTML += '<td>' + car.startDate + '</td>';
+            //t/ableHTML += '<td>' + car.endDate + '</td>';
+            //tableHTML += '<td>' + '<button id="startTripButton" /onclick="openTripModal(this)">Pradėti kelionę</button></td>';
+            //tableHTML += '<td>' + '<button id="cancelReservationButton" /onclick="cancelReservationInTrips(this)">Atšaukti</button></td>';
+            tableHTML += '</tr>';
+            
+            
+        }
+   
+        );
+        //document.getElementById('carsList').style.display = 'block';
+        tableHTML += '</table>';
+    
+        // Update the content of the container element
+        tableContainer.html(tableHTML);
+}
+    
+    
+
+
+
+
+
 
 async function showCurrentTrip()
 {

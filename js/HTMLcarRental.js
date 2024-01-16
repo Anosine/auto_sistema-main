@@ -53,7 +53,7 @@ async function searchReservations() {
 $(function onDocReady() {
 hideStart();
 
-var reqLevel=1;
+var reqLevel=0;
 console.log(rezSearchBody); 
 updateGlobalUserData()
   .then(level => {
